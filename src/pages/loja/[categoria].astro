@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StoreListing from '../../components/StoreListing.astro';
+import { BERVEX_SITE } from '../../config/site';
+import { CATEGORIES, categoryPath, productPath, productsInCategory, type Category } from '../../data/catalog';
+import { buildItemListSchema } from '../../lib/structured-data';
+
+export function getStaticPaths() {
+  return CATEGORIES.map((category) => ({ params: { categoria: category.id }, props: { category } }));
+}
+
+interface Props {
+  category: Category;
+}
+
+const { category } = Astro.props;
+const products = productsInCategory(category.id);
+const breadcrumbs = [
+  { name: 'Início', path: '/' },
+  { name: 'Loja', path: '/loja/' },
+  { name: category.name, path: categoryPath(category.id) },
+];
+const catalogSchema = buildItemListSchema(
+  BERVEX_SITE,
+  category.name,
+  products.map((p) => ({ name: p.name, description: p.summary, category: category.name, url: productPath(p) })),
+);
+---
+
+<BaseLayout
+  title={`${category.title} | BERVEX`}
+  description={category.description}
+  pageType="CollectionPage"
+  breadcrumbs={breadcrumbs}
+  extraSchema={[catalogSchema]}
+>
+  <StoreListing products={products} heading={category.name} intro={category.intro} activeCategory={category.id} />
+</BaseLayout>

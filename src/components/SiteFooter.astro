@@ -1,0 +1,84 @@
+---
+import Icon from './Icon.astro';
+import { BERVEX_SITE, CART_PAGE_PATH, CONTACT_PAGE_PATH } from '../config/site';
+import { CATEGORIES, categoryPath } from '../data/catalog';
+import { buildWhatsAppLink } from '../lib/whatsapp-link';
+
+const whatsappHref = buildWhatsAppLink(BERVEX_SITE.whatsappNumber, 'Olá, BERVEX! Vim pelo site.');
+const year = new Date().getFullYear();
+const floors = CATEGORIES.filter((c) => c.group === 'pisos');
+const fitness = CATEGORIES.filter((c) => c.group === 'fitness');
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+    <div class="site-footer__brand">
+      <picture>
+        <source srcset="/brand/bervex-lockup-96.webp" type="image/webp" />
+        <img src="/brand/bervex-lockup-96.png" alt="BERVEX" width="409" height="96" loading="lazy" decoding="async" />
+      </picture>
+      <p>Pisos, revestimentos e fitness. Escolha os produtos, monte o carrinho e finalize o pedido pelo WhatsApp.</p>
+      <a class="btn btn--gold" href={whatsappHref} target="_blank" rel="noopener">
+        <Icon name="whatsapp" /> Falar no WhatsApp
+      </a>
+    </div>
+
+    <nav class="site-footer__col" aria-label="Pisos">
+      <p class="site-footer__title">Pisos</p>
+      <ul>
+        {floors.map((c) => <li><a href={categoryPath(c.id)}>{c.name}</a></li>)}
+        <li><a href="/como-instalar-piso-vinilico/">Como instalar piso vinílico</a></li>
+      </ul>
+    </nav>
+
+    <nav class="site-footer__col" aria-label="Fitness">
+      <p class="site-footer__title">Fitness</p>
+      <ul>
+        {fitness.map((c) => <li><a href={categoryPath(c.id)}>{c.name}</a></li>)}
+      </ul>
+    </nav>
+
+    <div class="site-footer__col">
+      <p class="site-footer__title">Atendimento</p>
+      <ul>
+        <li><a href={whatsappHref} target="_blank" rel="noopener">WhatsApp {BERVEX_SITE.whatsappDisplay}</a></li>
+        <li><a href={`mailto:${BERVEX_SITE.email}`}>{BERVEX_SITE.email}</a></li>
+        <li><a href={BERVEX_SITE.instagramUrl} target="_blank" rel="noopener">Instagram</a></li>
+        {BERVEX_SITE.openingHours.map((h) => <li class="site-footer__muted">{h.label}</li>)}
+      </ul>
+      <p class="site-footer__title site-footer__title--gap">Loja</p>
+      <ul>
+        <li><a href="/loja/">Todos os produtos</a></li>
+        <li><a href={CART_PAGE_PATH}>Carrinho</a></li>
+        <li><a href="/sobre/">Sobre a BERVEX</a></li>
+        <li><a href={CONTACT_PAGE_PATH}>Contato</a></li>
+        <li><a href="/politica-de-privacidade/">Privacidade</a></li>
+        <li><a href="/termos-de-uso/">Termos de uso</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container site-footer__legal">
+    <p>© {year} {BERVEX_SITE.name}. Pisos, revestimentos e fitness.</p>
+    <p>Pedidos confirmados pelo WhatsApp, com valor e frete informados pela equipe.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer { background: var(--black); color: #e9e9e6; margin-top: 0; }
+  .site-footer__grid { display: grid; gap: 2.5rem; padding-block: clamp(3rem, 6vw, 4.5rem) 2.5rem; }
+  .site-footer__brand img { width: auto; height: 2.75rem; }
+  .site-footer__brand p { margin-block: 1.25rem 1.5rem; color: #b9b9b5; max-width: 34ch; }
+  .site-footer__title { font-weight: 700; color: #fff; margin-bottom: 0.85rem; }
+  .site-footer__title--gap { margin-top: 1.75rem; }
+  .site-footer__col ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.5rem; font-size: 0.9375rem; }
+  .site-footer__col a { color: #c9c9c5; text-decoration: none; transition: color var(--t-hover) ease; }
+  .site-footer__muted { color: #8f8f8b; }
+  @media (hover: hover) and (pointer: fine) { .site-footer__col a:hover { color: var(--gold); } }
+  .site-footer__legal {
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 2rem;
+    padding-block: 1.5rem 2rem; border-top: 1px solid #262626; color: #8f8f8b; font-size: 0.8125rem;
+  }
+  @media (min-width: 48em) { .site-footer__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 64em) { .site-footer__grid { grid-template-columns: 1.4fr 1fr 1fr 1fr; } }
+</style>

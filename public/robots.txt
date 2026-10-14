@@ -1,0 +1,28 @@
+# BERVEX — loja de pisos e equipamentos fitness
+User-agent: *
+Allow: /
+Disallow: /carrinho/
+
+# Buscadores de IA (AI Overviews, ChatGPT, Perplexity, Claude) podem ler e citar o site.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://www.bervex.com.br/sitemap-index.xml

@@ -1,0 +1,85 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { BERVEX_SITE } from '../config/site';
+
+export interface LegalSection {
+  id: string;
+  title: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  heading: string;
+  intro: string;
+  path: string;
+  updated: string;
+  sections: LegalSection[];
+}
+
+const { title, description, heading, intro, path, updated, sections } = Astro.props;
+const breadcrumbs = [
+  { name: 'Início', path: '/' },
+  { name: heading, path },
+];
+const cnpj = BERVEX_SITE.cnpj || 'a informar';
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs}>
+  <div class="container"><Breadcrumbs items={breadcrumbs} /></div>
+  <header class="container legal-head">
+    <h1>{heading}</h1>
+    <p class="legal-head__intro">{intro}</p>
+    <p class="legal-head__meta">
+      Atualizado em {updated} · {BERVEX_SITE.legalName} · CNPJ {cnpj}
+    </p>
+  </header>
+
+  <div class="container legal">
+    <nav class="legal__toc" aria-label="Nesta página">
+      <p class="legal__toc-title">Nesta página</p>
+      <ol>{sections.map((s) => <li><a href={`#${s.id}`}>{s.title}</a></li>)}</ol>
+      <p class="legal__toc-more">
+        Veja também: <a class="link" href="/politica-de-privacidade/">Privacidade</a> ·
+        <a class="link" href="/termos-de-uso/">Termos de uso</a>
+      </p>
+    </nav>
+    <article class="legal__body">
+      <slot />
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .legal-head { padding-bottom: clamp(1.5rem, 4vw, 2.5rem); max-width: 60rem; }
+  .legal-head h1 { font-size: clamp(2.25rem, 1.5rem + 3vw, 3.5rem); }
+  .legal-head__intro { margin-top: 1rem; font-size: var(--step-lead); color: #333; max-width: 62ch; }
+  .legal-head__meta {
+    display: inline-block; margin-top: 1.25rem; padding: 0.45rem 0.9rem; border-radius: 999px;
+    background: var(--gold-soft); color: var(--gold-ink); font-size: 0.8125rem; font-weight: 650;
+  }
+  .legal { display: grid; gap: 2rem; padding-bottom: clamp(3rem, 7vw, 5rem); }
+  .legal__toc { padding: 1.25rem; border-radius: var(--radius-lg); background: var(--surface); align-self: start; }
+  .legal__toc-title { font-weight: 700; margin-bottom: 0.6rem; }
+  .legal__toc ol { margin: 0; padding-left: 1.3rem; display: grid; gap: 0.35rem; font-size: 0.9375rem; }
+  .legal__toc ol a { color: var(--muted); text-decoration: none; }
+  .legal__toc ol a:hover { color: var(--ink); text-decoration: underline; }
+  .legal__toc-more { margin-top: 1rem; font-size: 0.875rem; color: var(--muted); }
+  .legal__body { max-width: 46rem; counter-reset: sec; }
+  .legal__body :global(section) { scroll-margin-top: 9rem; padding-bottom: 2rem; margin-bottom: 2rem; border-bottom: 1px solid var(--line); }
+  .legal__body :global(section:last-child) { border-bottom: 0; }
+  .legal__body :global(h2) { counter-increment: sec; font-size: var(--step-h3); margin-bottom: 0.9rem; display: flex; gap: 0.6rem; align-items: baseline; }
+  .legal__body :global(h2::before) { content: counter(sec, decimal-leading-zero); color: var(--gold-deep); font-size: 0.9em; }
+  .legal__body :global(p), .legal__body :global(li) { color: #2c2c2a; }
+  .legal__body :global(p + p) { margin-top: 0.8rem; }
+  .legal__body :global(ul) { margin: 0.75rem 0 0; padding-left: 1.2rem; display: grid; gap: 0.45rem; }
+  .legal__body :global(table) { width: 100%; border-collapse: collapse; margin-top: 0.75rem; font-size: 0.9375rem; }
+  .legal__body :global(th), .legal__body :global(td) { text-align: left; vertical-align: top; padding: 0.7rem 0.6rem; border-bottom: 1px solid var(--line); }
+  .legal__body :global(th) { background: var(--surface); font-size: 0.8125rem; }
+  .legal__body :global(.note) { margin-top: 1rem; padding: 0.9rem 1rem; border-radius: var(--radius); background: var(--gold-soft); color: var(--gold-ink); font-weight: 600; font-size: 0.9375rem; }
+  @media (min-width: 60em) {
+    .legal { grid-template-columns: 16rem 1fr; gap: 4rem; }
+    .legal__toc { position: sticky; top: 9rem; }
+  }
+</style>

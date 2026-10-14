@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StoreListing from '../../components/StoreListing.astro';
+import { PRODUCTS } from '../../data/catalog';
+
+const title = 'Loja: pisos e equipamentos fitness | BERVEX';
+const description =
+  'Todos os produtos BERVEX: piso vinílico, piso de borracha, grama sintética, tatame, anilhas, halteres, dumbbells, kettlebells, barras, puxadores e suportes.';
+const breadcrumbs = [
+  { name: 'Início', path: '/' },
+  { name: 'Loja', path: '/loja/' },
+];
+---
+
+<BaseLayout title={title} description={description} pageType="CollectionPage" breadcrumbs={breadcrumbs}>
+  <StoreListing
+    products={PRODUCTS}
+    heading="Todos os produtos"
+    intro="Escolha o modelo, a cor, o peso ou a espessura, monte o carrinho e finalize pelo WhatsApp."
+    searchable
+  />
+</BaseLayout>

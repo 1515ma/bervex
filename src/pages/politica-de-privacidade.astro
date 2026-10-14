@@ -1,0 +1,145 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { BERVEX_SITE } from '../config/site';
+
+const sections = [
+  { id: 'quem-somos', title: 'Quem é o controlador' },
+  { id: 'dados', title: 'Quais dados tratamos' },
+  { id: 'finalidades', title: 'Para que usamos' },
+  { id: 'bases-legais', title: 'Bases legais' },
+  { id: 'compartilhamento', title: 'Com quem compartilhamos' },
+  { id: 'armazenamento', title: 'Armazenamento e prazos' },
+  { id: 'cookies', title: 'Cookies e armazenamento local' },
+  { id: 'direitos', title: 'Seus direitos' },
+  { id: 'seguranca', title: 'Segurança' },
+  { id: 'criancas', title: 'Crianças e adolescentes' },
+  { id: 'alteracoes', title: 'Alterações' },
+  { id: 'contato-dpo', title: 'Contato do encarregado' },
+];
+const address = BERVEX_SITE.address || 'endereço a informar';
+---
+
+<LegalLayout
+  title="Política de Privacidade (LGPD) | BERVEX"
+  description="Como a BERVEX trata dados pessoais de quem visita o site, monta o carrinho e faz pedidos pelo WhatsApp, conforme a Lei Geral de Proteção de Dados."
+  heading="Política de Privacidade"
+  intro="Explicamos, em linguagem direta, quais dados pessoais tratamos quando você navega no site, monta o carrinho e fala com a gente, por que tratamos e como você controla essas informações, conforme a Lei 13.709/2018 (LGPD)."
+  path="/politica-de-privacidade/"
+  updated="13 de outubro de 2026"
+  sections={sections}
+>
+  <section id="quem-somos">
+    <h2>Quem é o controlador</h2>
+    <p>
+      O controlador dos dados é {BERVEX_SITE.legalName}, CNPJ {BERVEX_SITE.cnpj || 'a informar'}, {address}, responsável pelo site
+      {BERVEX_SITE.url.replace('https://', '')} e pela loja BERVEX.
+    </p>
+  </section>
+
+  <section id="dados">
+    <h2>Quais dados tratamos</h2>
+    <table>
+      <thead><tr><th scope="col">Situação</th><th scope="col">Dados</th></tr></thead>
+      <tbody>
+        <tr><td>Navegação no site</td><td>Dados técnicos de acesso registrados pela hospedagem: endereço IP, data e hora, navegador e página acessada.</td></tr>
+        <tr><td>Carrinho</td><td>Produtos, opções e quantidades escolhidos. Ficam apenas no seu navegador até você enviar o pedido.</td></tr>
+        <tr><td>Pedido e orçamento</td><td>Nome, cidade ou CEP, telefone, e-mail e o conteúdo da mensagem que você envia pelo WhatsApp, e-mail ou formulário.</td></tr>
+        <tr><td>Entrega e venda</td><td>Endereço de entrega, CPF ou CNPJ e dados para emissão de nota fiscal, informados durante a negociação.</td></tr>
+      </tbody>
+    </table>
+    <p class="note">O site não tem cadastro, não pede senha e não recebe dados de cartão. O pagamento é combinado diretamente com a equipe.</p>
+  </section>
+
+  <section id="finalidades">
+    <h2>Para que usamos</h2>
+    <ul>
+      <li>Responder dúvidas e enviar orçamentos com valor, frete e prazo.</li>
+      <li>Fechar, faturar e entregar pedidos, e prestar suporte e garantia.</li>
+      <li>Cumprir obrigações legais e fiscais, como emissão e guarda de notas fiscais.</li>
+      <li>Manter o site funcionando com segurança e corrigir erros.</li>
+      <li>Enviar novidades e ofertas, somente se você pedir ou autorizar, com opção de sair a qualquer momento.</li>
+    </ul>
+  </section>
+
+  <section id="bases-legais">
+    <h2>Bases legais</h2>
+    <p>Tratamos dados com base nas hipóteses do art. 7º da LGPD:</p>
+    <ul>
+      <li><strong>Procedimentos preliminares e execução de contrato:</strong> orçamento, venda, entrega e garantia.</li>
+      <li><strong>Cumprimento de obrigação legal:</strong> documentos fiscais e contábeis.</li>
+      <li><strong>Legítimo interesse:</strong> segurança do site e melhoria do atendimento, respeitando suas expectativas.</li>
+      <li><strong>Consentimento:</strong> comunicações de marketing, que você pode revogar quando quiser.</li>
+    </ul>
+  </section>
+
+  <section id="compartilhamento">
+    <h2>Com quem compartilhamos</h2>
+    <p>Não vendemos dados pessoais. Compartilhamos apenas o necessário com:</p>
+    <ul>
+      <li>Transportadoras e instaladores, para entregar e instalar o pedido.</li>
+      <li>Meios de pagamento e instituições financeiras escolhidos por você.</li>
+      <li>Contabilidade e órgãos públicos, quando a lei exigir.</li>
+      <li>Fornecedores de tecnologia, como hospedagem do site, WhatsApp e e-mail, que seguem as próprias políticas de privacidade.</li>
+    </ul>
+  </section>
+
+  <section id="armazenamento">
+    <h2>Armazenamento e prazos</h2>
+    <p>
+      Guardamos os dados pelo tempo necessário para atender à finalidade: conversas de orçamento sem compra são apagadas em até
+      12 meses; dados de pedidos e notas fiscais são mantidos pelos prazos legais, em geral 5 anos.
+    </p>
+    <p>Alguns fornecedores, como o WhatsApp, podem armazenar dados fora do Brasil, com as garantias previstas na LGPD.</p>
+  </section>
+
+  <section id="cookies">
+    <h2>Cookies e armazenamento local</h2>
+    <p>
+      O site não usa cookies de publicidade nem ferramentas de rastreamento. Usamos o armazenamento local do navegador
+      (localStorage) só para lembrar os itens do seu carrinho entre uma página e outra. Para apagar, esvazie o carrinho ou limpe os
+      dados do site nas configurações do navegador.
+    </p>
+    <p>Se no futuro adotarmos ferramentas de análise ou publicidade, esta política será atualizada e pediremos seu consentimento quando necessário.</p>
+  </section>
+
+  <section id="direitos">
+    <h2>Seus direitos</h2>
+    <p>Pelo art. 18 da LGPD, você pode pedir, de graça e a qualquer momento:</p>
+    <ul>
+      <li>Confirmação de que tratamos seus dados e acesso a eles.</li>
+      <li>Correção de dados incompletos, inexatos ou desatualizados.</li>
+      <li>Anonimização, bloqueio ou eliminação de dados desnecessários ou tratados em desacordo com a lei.</li>
+      <li>Portabilidade para outro fornecedor.</li>
+      <li>Informação sobre com quem compartilhamos.</li>
+      <li>Revogação do consentimento e eliminação dos dados tratados com base nele.</li>
+    </ul>
+    <p>Respondemos em até 15 dias. Você também pode reclamar à Autoridade Nacional de Proteção de Dados (ANPD).</p>
+  </section>
+
+  <section id="seguranca">
+    <h2>Segurança</h2>
+    <p>
+      O site usa conexão criptografada (HTTPS) e não armazena dados de formulário em servidor. Na equipe, o acesso a dados de
+      clientes é restrito a quem precisa deles para atender seu pedido.
+    </p>
+  </section>
+
+  <section id="criancas">
+    <h2>Crianças e adolescentes</h2>
+    <p>A loja é voltada a maiores de 18 anos. Não coletamos intencionalmente dados de crianças; se isso acontecer, apagaremos ao tomar conhecimento.</p>
+  </section>
+
+  <section id="alteracoes">
+    <h2>Alterações</h2>
+    <p>Podemos atualizar esta política. A data no topo mostra a versão em vigor, e mudanças relevantes serão destacadas no site.</p>
+  </section>
+
+  <section id="contato-dpo">
+    <h2>Contato do encarregado</h2>
+    <p>
+      Para exercer seus direitos ou tirar dúvidas sobre privacidade, escreva para
+      <a class="link" href={`mailto:${BERVEX_SITE.privacyEmail}`}>{BERVEX_SITE.privacyEmail}</a> ou fale pelo WhatsApp
+      {BERVEX_SITE.whatsappDisplay}.
+    </p>
+  </section>
+</LegalLayout>

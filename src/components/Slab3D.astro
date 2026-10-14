@@ -1,0 +1,88 @@
+---
+/**
+ * Placa de piso em 3D feita só com CSS (topo com a textura real, laterais mostrando a espessura).
+ * Controlada por scripts/slab3d.ts através de [data-slab-set].
+ */
+interface Props {
+  texture: string;
+  thicknessMm: number;
+  label: string;
+  kind: 'vinilico' | 'borracha';
+  href?: string;
+  linkLabel?: string;
+  class?: string;
+}
+
+const { texture, thicknessMm, label, kind, href, linkLabel, class: className } = Astro.props;
+const heightPx = Math.max(6, Math.round(thicknessMm * 1.6));
+---
+
+<figure class:list={['slab', `slab--${kind}`, className]} data-slab style={`--tex:url("${texture}");--h:${heightPx}px`}>
+  <div class="slab__stage">
+    <div class="slab__shadow" aria-hidden="true"></div>
+    <div class="slab__box" aria-hidden="true">
+      <div class="slab__face slab__top"></div>
+      <div class="slab__face slab__front"></div>
+      <div class="slab__face slab__side"></div>
+    </div>
+  </div>
+  <figcaption class="slab__caption">
+    <span class="slab__label" data-slab-label>{label}</span>
+    {href && <a class="link-arrow slab__link" href={href} data-slab-link>{linkLabel ?? 'Ver produto'}</a>}
+  </figcaption>
+</figure>
+
+<style>
+  .slab { --size: clamp(13rem, 24vw, 21rem); display: grid; justify-items: center; gap: 1.25rem; margin: 0; }
+  .slab__stage {
+    position: relative; width: calc(var(--size) * 1.55); height: calc(var(--size) * 1.05);
+    display: grid; place-items: center; perspective: 1400px;
+  }
+  .slab__box {
+    position: relative; width: var(--size); height: var(--size); transform-style: preserve-3d;
+    transform: rotateX(calc(58deg + var(--rx2, 0deg))) rotateZ(calc(-38deg + var(--rz, 0deg)));
+    transition: transform 600ms var(--ease-out);
+  }
+  .slab__face { position: absolute; left: 0; top: 0; backface-visibility: hidden; }
+  .slab__top {
+    width: var(--size); height: var(--size); border-radius: 3px;
+    background: var(--tex) center / cover, #c9b48f;
+    transform: translateZ(var(--h));
+    transition: transform 500ms var(--ease-out), background-image 0s;
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.18);
+  }
+  .slab__front {
+    top: var(--size); width: var(--size); height: var(--h); transform-origin: top;
+    transform: translateZ(var(--h)) rotateX(-90deg);
+    transition: transform 500ms var(--ease-out), height 500ms var(--ease-out);
+  }
+  .slab__side {
+    left: var(--size); width: var(--h); height: var(--size); transform-origin: left;
+    transform: translateZ(var(--h)) rotateY(90deg);
+    transition: transform 500ms var(--ease-out), width 500ms var(--ease-out);
+  }
+  /* laterais do vinílico: capa de uso clara + miolo + base */
+  .slab--vinilico .slab__front { background: linear-gradient(to bottom, #f1ece2 0 22%, var(--tex) center / cover); filter: brightness(0.82); }
+  .slab--vinilico .slab__side { background: linear-gradient(to right, #f1ece2 0 22%, #7d6a52 22% 70%, #4d4236 70%); filter: brightness(0.7); }
+  .slab--vinilico .slab__front { background: linear-gradient(to bottom, #f1ece2 0 22%, #8a765c 22% 70%, #4d4236 70%); }
+  /* laterais da borracha: grânulos escuros */
+  .slab--borracha .slab__front, .slab--borracha .slab__side { background: var(--tex) center / 180px, #1d1d1d; }
+  .slab--borracha .slab__front { filter: brightness(0.62); }
+  .slab--borracha .slab__side { filter: brightness(0.45); }
+
+  .slab__shadow {
+    position: absolute; left: 50%; top: 60%; width: calc(var(--size) * 1.25); height: calc(var(--size) * 0.42);
+    translate: -50% -50%; border-radius: 50%; background: radial-gradient(closest-side, rgb(60 40 10 / 0.28), transparent);
+    filter: blur(6px);
+  }
+  .slab__caption { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.4rem 1rem; text-align: center; }
+  .slab__label {
+    padding: 0.4rem 0.85rem; border-radius: 999px; background: #fff; font-size: 0.875rem; font-weight: 700;
+    box-shadow: 0 6px 18px rgb(80 50 0 / 0.1); /* taste-skill-ignore: etiqueta da peça 3D */
+  }
+  .slab__link { font-size: 0.875rem; }
+  @media (prefers-reduced-motion: no-preference) {
+    .slab__stage { animation: slab-float 7s ease-in-out infinite; }
+  }
+  @keyframes slab-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -6px; } }
+</style>

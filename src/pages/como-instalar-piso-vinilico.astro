@@ -1,0 +1,249 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Icon from '../components/Icon.astro';
+import { BERVEX_SITE } from '../config/site';
+import { categoryPath } from '../data/catalog';
+import { catalogImage } from '../lib/catalog-images';
+import { toAbsoluteUrl } from '../lib/structured-data';
+
+const path = '/como-instalar-piso-vinilico/';
+const title = 'Como instalar piso vinílico colado e SPC: guia completo | BERVEX';
+const description =
+  'Passo a passo para instalar piso vinílico colado e SPC (clicado): preparo do contrapiso, aclimatação, folgas de dilatação, ferramentas, limpeza e garantia.';
+const breadcrumbs = [
+  { name: 'Início', path: '/' },
+  { name: 'Como instalar piso vinílico', path },
+];
+const article = {
+  '@type': 'Article',
+  headline: 'Como instalar piso vinílico colado e SPC',
+  description,
+  inLanguage: 'pt-BR',
+  datePublished: '2026-10-13',
+  dateModified: '2026-10-13',
+  mainEntityOfPage: toAbsoluteUrl(BERVEX_SITE, path),
+  author: { '@type': 'Organization', name: BERVEX_SITE.name, url: toAbsoluteUrl(BERVEX_SITE, '/') },
+  publisher: { '@id': `${toAbsoluteUrl(BERVEX_SITE, '/')}#organizacao` },
+  image: toAbsoluteUrl(BERVEX_SITE, BERVEX_SITE.ogImagePath),
+};
+
+const toc = [
+  { id: 'colado-ou-spc', label: 'Colado ou SPC?' },
+  { id: 'antes-de-instalar', label: 'Antes de instalar' },
+  { id: 'contrapiso', label: 'Contrapiso' },
+  { id: 'instalar-spc', label: 'Instalando o SPC (clicado)' },
+  { id: 'instalar-colado', label: 'Instalando o colado' },
+  { id: 'limpeza', label: 'Limpeza e manutenção' },
+  { id: 'uso', label: 'Classificação de uso' },
+  { id: 'garantia', label: 'Garantia' },
+];
+---
+
+<BaseLayout title={title} description={description} breadcrumbs={breadcrumbs} extraSchema={[article]} ogImagePath={BERVEX_SITE.ogImagePath}>
+  <div class="container"><Breadcrumbs items={breadcrumbs} /></div>
+
+  <header class="container guide-head">
+    <div>
+      <h1>Como instalar piso vinílico</h1>
+      <p class="guide-head__lead">
+        O guia para deixar seu piso vinílico colado ou SPC firme, bonito e dentro da garantia: do preparo do contrapiso à
+        limpeza do dia a dia.
+      </p>
+      <div class="guide-head__actions">
+        <a class="btn" href={categoryPath('pisos-vinilicos')}>Ver pisos vinílicos</a>
+        <a class="btn btn--ghost" href="#instalar-colado">Ir para o passo a passo</a>
+      </div>
+    </div>
+    <figure class="guide-head__media">
+      <Image
+        src={catalogImage('photos/obra-academia-vinilico')}
+        alt="Piso vinílico amadeirado instalado em uma academia"
+        widths={[480, 720]}
+        sizes="(min-width: 60em) 40vw, 100vw"
+        format="webp"
+        quality={80}
+        loading="eager"
+      />
+    </figure>
+  </header>
+
+  <div class="container guide">
+    <nav class="guide__toc" aria-label="Neste guia">
+      <p class="guide__toc-title">Neste guia</p>
+      <ol>{toc.map((t) => <li><a href={`#${t.id}`}>{t.label}</a></li>)}</ol>
+    </nav>
+
+    <article class="guide__body">
+      <section id="colado-ou-spc">
+        <h2>Colado ou SPC: qual escolher?</h2>
+        <p>Os dois são de PVC, resistem ao tráfego e à água do dia a dia, mas não a áreas sempre molhadas. A diferença está na instalação:</p>
+        <div class="table-wrap">
+          <table class="compare">
+            <thead>
+              <tr><th scope="col"></th><th scope="col">Colado</th><th scope="col">SPC (clicado)</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Fixação</th><td>Cola acrílica no contrapiso</td><td>Encaixe click, sem cola</td></tr>
+              <tr><th scope="row">Contrapiso</th><td>Exige nivelamento rigoroso</td><td>Tolera pequenas imperfeições</td></tr>
+              <tr><th scope="row">Manta acústica</th><td>Não tem</td><td>Já vem acoplada</td></tr>
+              <tr><th scope="row">Pode retirar?</th><td>Não, é permanente</td><td>Sim, dá para levar numa mudança</td></tr>
+              <tr><th scope="row">Investimento</th><td>Menor</td><td>Um pouco maior</td></tr>
+              <tr><th scope="row">Móveis pesados</th><td>Depois de 72 horas</td><td>Depois de 24 horas</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="antes-de-instalar">
+        <h2>Antes de instalar</h2>
+        <ul class="checks">
+          <li><strong>Confira o lote.</strong> Veja se as caixas batem com a nota fiscal e se o lote é o mesmo em todas.</li>
+          <li><strong>Armazene direito.</strong> Local fechado e ventilado, entre 15 °C e 27 °C, longe do sol, caixas deitadas sobre superfície plana e no máximo 11 caixas empilhadas.</li>
+          <li><strong>Monte um painel de teste.</strong> Pegue réguas de pelo menos duas caixas e confira no chão a tonalidade, a textura e o desenho.</li>
+          <li><strong>Aclimate por 24 horas.</strong> Tire as réguas das caixas e deixe-as empilhadas e planas no próprio ambiente, entre 15 °C e 27 °C.</li>
+        </ul>
+      </section>
+
+      <section id="contrapiso">
+        <h2>Preparando o contrapiso</h2>
+        <p>O contrapiso precisa estar limpo, seco, curado, impermeabilizado e nivelado. É ele que decide se o piso vai durar.</p>
+        <ul class="checks">
+          <li><strong>Planicidade.</strong> Desnível máximo de 3 mm a cada 2 metros (ABNT NBR 15575-3). No piso colado, corrija com autonivelante e aguarde 24 horas.</li>
+          <li><strong>Umidade.</strong> Até 2,5% (ABNT NBR 14917), medida por radiofrequência, carbureto de cálcio ou o teste do plástico.</li>
+          <li><strong>Térreo.</strong> Em casas e apartamentos no térreo, faça o barramento contra a umidade que sobe do solo.</li>
+        </ul>
+        <div class="two">
+          <div class="note note--ok">
+            <p class="note__title"><Icon name="check" size={18} /> Pode instalar sobre</p>
+            <ul>
+              <li>Cimentado desempenado ou laje de concreto</li>
+              <li>Cerâmica, porcelanato, granito ou mármore com juntas menores que 5 mm</li>
+              <li>Piso aquecido até 27 °C</li>
+              <li>Mezanino de painel wall, placa cimentícia ou laje</li>
+            </ul>
+          </div>
+          <div class="note note--no">
+            <p class="note__title"><Icon name="close" size={18} /> Não instale sobre</p>
+            <ul>
+              <li>Piso de madeira, nem colado nem clicado: há risco de fungo e perda da garantia</li>
+              <li>Contrapiso úmido, sem cura ou com desníveis</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="instalar-spc">
+        <h2>Instalando o piso vinílico SPC (clicado)</h2>
+        <ol class="steps">
+          <li><strong>Planeje o sentido.</strong> De preferência no comprimento do ambiente. Marque o centro e calcule para não sobrar régua estreita nas bordas.</li>
+          <li><strong>Comece pela parede mais longa e reta</strong>, deixando de 5 a 10 mm de folga para a parede, batentes e colunas.</li>
+          <li><strong>Encaixe a cerca de 20°</strong> e pressione até ouvir o click. As réguas encostam umas nas outras, sem espaço entre elas.</li>
+          <li><strong>Desencontre as juntas</strong> em pelo menos 20 cm de uma fileira para a outra.</li>
+          <li><strong>Finalize</strong> com rodapés e perfis de transição, mantenha o ambiente ventilado e espere 24 horas para móveis pesados.</li>
+        </ol>
+        <p class="tools"><strong>Ferramentas:</strong> estilete ou serra tico-tico, régua de metal, esquadro, lápis, martelo de borracha, cunhas espaçadoras e trena. Não use cola.</p>
+      </section>
+
+      <section id="instalar-colado">
+        <h2>Instalando o piso vinílico colado</h2>
+        <ol class="steps">
+          <li><strong>Nivele com rigor.</strong> Confira com régua de alumínio e corrija qualquer desnível: no colado, a imperfeição aparece.</li>
+          <li><strong>Planeje o sentido</strong> como no SPC, começando pela parede mais longa e reta.</li>
+          <li><strong>Aplique a cola acrílica</strong> com desempenadeira dentada, em pequenas áreas, para ela não secar antes das réguas.</li>
+          <li><strong>Assente as réguas</strong> pressionando bem, encostadas umas nas outras, com 3 a 5 mm de folga para paredes e pilares.</li>
+          <li><strong>Instale o rodapé</strong> fixando só na parede, nunca no piso, mantendo a folga de 3 a 5 mm.</li>
+          <li><strong>Espere 72 horas</strong> para móveis pesados, com o ambiente arejado para a cola curar.</li>
+        </ol>
+        <p class="tools"><strong>Ferramentas:</strong> desempenadeira dentada, régua de alumínio, estilete ou serra tico-tico, régua de metal, esquadro, lápis, trena, furadeira e serra para rodapé.</p>
+        <p class="callout"><Icon name="tool" size={18} /> Para manter a garantia, contrate um instalador qualificado e use cola e materiais de qualidade.</p>
+      </section>
+
+      <section id="limpeza">
+        <h2>Limpeza e manutenção</h2>
+        <ul class="checks">
+          <li><strong>No dia a dia:</strong> vassoura de cerdas macias ou aspirador, e pano levemente úmido com detergente neutro.</li>
+          <li><strong>Toda semana:</strong> mop úmido com detergente neutro, enxágue e seque na hora.</li>
+          <li><strong>Evite:</strong> palha de aço, produtos abrasivos, cera, verniz, álcool, amônia e água em excesso.</li>
+          <li><strong>Proteja:</strong> feltro sob os móveis, capacho nas entradas, unhas dos pets aparadas e umidade do ar entre 40% e 60%.</li>
+          <li><strong>Cuidado com rodinhas:</strong> pneus de borracha sintética derivada de petróleo podem manchar o piso.</li>
+        </ul>
+      </section>
+
+      <section id="uso">
+        <h2>Classificação de uso</h2>
+        <div class="table-wrap">
+          <table class="compare">
+            <thead><tr><th scope="col">Área</th><th scope="col">Exemplos</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Residencial</th><td>Dormitórios (leve), salas e halls (moderado), cozinhas e áreas de serviço (pesado)</td></tr>
+              <tr><th scope="row">Comercial</th><td>Quartos de hotel e salas de reunião, escritórios e pequenas lojas, corredores e escolas, até hospitais e aeroportos (muito pesado)</td></tr>
+              <tr><th scope="row">Industrial</th><td>Laboratórios e montagem eletrônica (moderado), depósitos e salas de produção (geral e pesado)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Escolha uma linha com classificação adequada ao ambiente. Na dúvida, pergunte pelo WhatsApp antes de comprar.</p>
+      </section>
+
+      <section id="garantia">
+        <h2>Garantia</h2>
+        <p>
+          A garantia cobre defeitos de fabricação conforme as normas ABNT NBR 14917-1 e 14917-2 e depende de instalação por
+          profissional qualificado, uso dos produtos indicados, respeito aos tempos de aclimatação (24 h) e de cura (72 h) e
+          ambiente ventilado. Problemas de contrapiso inadequado, uso incorreto ou manutenção errada não entram na garantia.
+          Em caso de defeito, fale com a gente com o número do pedido e da nota fiscal.
+        </p>
+      </section>
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .guide-head { display: grid; gap: 2rem; align-items: center; padding-bottom: clamp(2rem, 5vw, 3.5rem); }
+  .guide-head h1 { font-size: clamp(2rem, 1.4rem + 2.6vw, 3.25rem); }
+  .guide-head__lead { margin-top: 1rem; color: var(--muted); font-size: var(--step-lead); max-width: 48ch; }
+  .guide-head__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; }
+  .guide-head__media { border-radius: 20px; overflow: hidden; aspect-ratio: 16 / 10; }
+  .guide-head__media :global(img) { width: 100%; height: 100%; object-fit: cover; }
+
+  .guide { display: grid; gap: 2rem; padding-bottom: clamp(3rem, 6vw, 5rem); }
+  .guide__toc { padding: 1.25rem; border-radius: var(--radius-lg); background: var(--surface); align-self: start; }
+  .guide__toc-title { font-weight: 700; margin-bottom: 0.6rem; }
+  .guide__toc ol { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.35rem; font-size: 0.9375rem; }
+  .guide__toc a { color: var(--muted); text-decoration: none; }
+  @media (hover: hover) and (pointer: fine) { .guide__toc a:hover { color: var(--ink); text-decoration: underline; } }
+
+  .guide__body { display: grid; gap: 3rem; max-width: 46rem; }
+  .guide__body section { scroll-margin-top: 9rem; }
+  .guide__body h2 { font-size: var(--step-h2); margin-bottom: 1rem; }
+  .guide__body p { color: #2c2c2a; }
+  .guide__body p + p, .guide__body .table-wrap + p { margin-top: 0.9rem; }
+  .checks { display: grid; gap: 0.75rem; margin-top: 1rem; }
+  .checks li { position: relative; padding-left: 1.5rem; color: #2c2c2a; }
+  .checks li::before { content: ''; position: absolute; left: 0; top: 0.6rem; width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--gold); }
+  .steps { margin: 0; padding-left: 1.4rem; display: grid; gap: 0.75rem; color: #2c2c2a; }
+  .steps li::marker { color: var(--gold-ink); font-weight: 800; }
+  .tools { margin-top: 1.25rem; padding: 1rem; border-radius: var(--radius); background: var(--surface); font-size: 0.9375rem; }
+  .callout { display: flex; gap: 0.6rem; align-items: center; margin-top: 1rem; padding: 0.9rem 1rem; border-radius: var(--radius); background: var(--gold-soft); color: var(--gold-ink); font-weight: 600; font-size: 0.9375rem; }
+  .table-wrap { overflow-x: auto; margin-top: 1rem; border: 1px solid var(--line); border-radius: var(--radius-lg); }
+  .compare { width: 100%; border-collapse: collapse; font-size: 0.9375rem; min-width: 30rem; }
+  .compare th, .compare td { text-align: left; padding: 0.8rem 1rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .compare tbody tr:last-child th, .compare tbody tr:last-child td { border-bottom: 0; }
+  .compare thead th { background: var(--surface); font-size: 0.8125rem; }
+  .compare tbody th { font-weight: 700; width: 28%; }
+  .two { display: grid; gap: 1rem; margin-top: 1.25rem; }
+  .note { padding: 1.1rem 1.25rem; border-radius: var(--radius-lg); border: 1px solid var(--line); }
+  .note ul { margin: 0.6rem 0 0; padding-left: 1.1rem; display: grid; gap: 0.35rem; font-size: 0.9375rem; }
+  .note__title { display: flex; align-items: center; gap: 0.45rem; font-weight: 700; }
+  .note--ok .note__title :global(svg) { color: #2e7d32; }
+  .note--no { background: #fdf3f2; border-color: #f2d6d3; }
+  .note--no .note__title :global(svg) { color: var(--danger); }
+
+  @media (min-width: 48em) { .two { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 60em) {
+    .guide-head { grid-template-columns: 1.1fr 0.9fr; gap: 4rem; }
+    .guide { grid-template-columns: 15rem 1fr; gap: 4rem; }
+    .guide__toc { position: sticky; top: 9rem; }
+  }
+</style>

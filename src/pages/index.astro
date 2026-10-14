@@ -1,0 +1,402 @@
+---
+import { Image, getImage } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import HeroBanner from '../components/HeroBanner.astro';
+import Slab3D from '../components/Slab3D.astro';
+import rubberTexture from '../assets/textures/borracha.jpg';
+import ProductCard from '../components/ProductCard.astro';
+import { BERVEX_SITE } from '../config/site';
+import { CATEGORIES, categoryPath, featuredProducts, productPath, productsInCategory } from '../data/catalog';
+import { catalogImage } from '../lib/catalog-images';
+import { buildWhatsAppLink } from '../lib/whatsapp-link';
+
+const title = 'BERVEX | Piso vinílico, piso de borracha e equipamentos fitness';
+const description =
+  'Piso vinílico, piso de borracha para academia, grama, tatame, anilhas, halteres, dumbbells e kettlebells. Monte o carrinho e finalize pelo WhatsApp.';
+const whatsappHref = buildWhatsAppLink(BERVEX_SITE.whatsappNumber, 'Olá, BERVEX! Quero ajuda para escolher produtos.');
+
+const rubberTex = (await getImage({ src: rubberTexture, width: 512, format: 'webp', quality: 80 })).src;
+const floorCategories = CATEGORIES.filter((c) => c.group === 'pisos');
+const fitnessCategories = CATEGORIES.filter((c) => c.group === 'fitness');
+const featured = featuredProducts().slice(0, 8);
+const vinylLines = productsInCategory('pisos-vinilicos');
+const vinylColorCount = vinylLines.reduce((sum, p) => sum + (p.options[0]?.values.length ?? 0), 0);
+
+const values = [
+  { icon: 'shield', title: 'Alta resistência', text: 'Borracha densa, vinil com capa de uso e pesos de ferro fundido.' },
+  { icon: 'dumbbell', title: 'Desempenho profissional', text: 'Produtos de academia para casa, condomínio e uso comercial.' },
+  { icon: 'leaf', title: 'Sustentável', text: 'Placas de borracha que reaproveitam pneus descartados.' },
+  { icon: 'gear', title: 'Qualidade industrial', text: 'Medidas e acabamentos conferidos antes de cada pedido.' },
+] as const;
+
+const faq = [
+  {
+    q: 'Como faço um pedido?',
+    a: 'Escolha o produto, as opções (cor, peso, espessura) e a quantidade, adicione ao carrinho e toque em “Enviar pedido pelo WhatsApp”. A mensagem vai pronta com a lista, e a equipe responde com valor, frete e prazo.',
+  },
+  {
+    q: 'Por que não há preço no site?',
+    a: 'Valor e frete dependem da quantidade e da sua cidade. Pelo WhatsApp você recebe o total certo, sem surpresa, e pode tirar dúvidas antes de pagar.',
+  },
+  {
+    q: 'Qual espessura de piso de borracha escolher?',
+    a: '15 mm para cardio e funcional, 20 mm para musculação e peso livre e 30 a 50 mm onde a barra cai no chão, como LPO e cross training. A calculadora acima indica a espessura pelo tipo de treino.',
+  },
+  {
+    q: 'Piso vinílico colado ou SPC?',
+    a: 'O colado é mais econômico, fino e fica fixo no contrapiso, que precisa estar bem nivelado. O SPC (clicado) monta sem cola, tolera pequenas imperfeições e pode ser retirado numa mudança.',
+  },
+  {
+    q: 'Quanto piso vinílico comprar?',
+    a: 'Meça o ambiente e some 10% para os recortes. Na página de cada piso há um campo que faz essa conta e já preenche a quantidade em m².',
+  },
+];
+---
+
+<BaseLayout title={title} description={description}>
+  <HeroBanner />
+
+  <!-- valores da marca -->
+  <section class="values" aria-label="Diferenciais">
+    <ul class="container values__list">
+      {
+        values.map((v) => (
+          <li class="values__item" data-tilt="8">
+            <span class="values__icon"><Icon name={v.icon} size={26} /></span>
+            <div>
+              <p class="values__title">{v.title}</p>
+              <p class="values__text">{v.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- categorias -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2 class="kicker-line">Compre por categoria</h2>
+          <p>Pisos para casa, comércio e academia e tudo para montar a área de treino.</p>
+        </div>
+        <a class="link-arrow" href="/loja/">Ver todos os produtos</a>
+      </div>
+
+      <div class="cats cats--floors">
+        {
+          floorCategories.map((c, i) => (
+            <a class="cat cat--big" href={categoryPath(c.id)} data-tilt="7">
+              <span class:list={['cat__media', c.id === 'pisos-vinilicos' && 'cat__media--cover']}>
+                <Image
+                  src={catalogImage(c.image)}
+                  alt=""
+                  widths={[320, 480]}
+                  sizes="(min-width: 48em) 30vw, 90vw"
+                  format="webp"
+                  quality={78}
+                  loading="lazy"
+                  class="cat__img"
+                />
+              </span>
+              <span class="cat__body">
+                <span class="cat__name">{c.name}</span>
+                <span class="cat__meta">{productsInCategory(c.id).length} produtos</span>
+              </span>
+              <span class="tilt-glare" aria-hidden="true"></span>
+            </a>
+          ))
+        }
+      </div>
+
+      <div class="cats cats--fitness">
+        {
+          fitnessCategories.map((c, i) => (
+            <a class="cat" href={categoryPath(c.id)} data-tilt="9">
+              <span class="cat__media">
+                <Image src={catalogImage(c.image)} alt="" widths={[200, 320]} sizes="(min-width: 48em) 20vw, 44vw" format="webp" quality={78} loading="lazy" class="cat__img" />
+              </span>
+              <span class="cat__body">
+                <span class="cat__name">{c.name}</span>
+                <span class="cat__meta">{productsInCategory(c.id).length} produtos</span>
+              </span>
+              <span class="tilt-glare" aria-hidden="true"></span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- destaques -->
+  <section class="section section--tint">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2 class="kicker-line">Mais procurados</h2>
+          <p>Os itens que mais saem para academias, condomínios e treino em casa.</p>
+        </div>
+        <a class="link-arrow" href="/loja/">Ver loja completa</a>
+      </div>
+      <div class="product-grid">
+        {featured.map((p) => <ProductCard product={p} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- vitrine de vinílicos -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2 class="kicker-line">Piso vinílico em {vinylColorCount} cores</h2>
+          <p>{vinylLines.length} linhas Durafloor e EspaçoFloor em madeira, pedra e cimento. Escolha a cor na página de cada linha.</p>
+        </div>
+        <a class="link-arrow" href={categoryPath('pisos-vinilicos')}>Ver pisos vinílicos</a>
+      </div>
+    </div>
+    <ul class="vinyl-rail" aria-label="Linhas de piso vinílico">
+      {
+        vinylLines.map((p) => (
+          <li>
+            <a class="vinyl-card" href={productPath(p)} data-tilt="12">
+              <Image src={catalogImage(p.image)} alt="" width={260} height={260} format="webp" quality={78} loading="lazy" class="vinyl-card__img" />
+              <span class="vinyl-card__name">{p.name.replace('Piso vinílico ', '')}</span>
+              <span class="vinyl-card__meta">{p.options[0]?.values.length} cores</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- calculadora -->
+  <section class="section section--tint" id="calculadora">
+    <div class="container calc">
+      <div class="calc__intro">
+        <h2 class="kicker-line">Quantas placas de borracha você precisa?</h2>
+        <p class="muted">
+          Escolha o tipo de treino e digite as medidas. A conta soma 5% de margem para recortes e já leva você ao piso certo,
+          com espessura e quantidade marcadas.
+        </p>
+        <div class="calc__slab">
+          <Slab3D kind="borracha" texture={rubberTex} thicknessMm={20} label="20 mm · Musculação" />
+        </div>
+      </div>
+
+      <div class="calc__card" data-home-calc>
+        <form class="calc__form">
+          <fieldset class="calc__types">
+            <legend class="calc__legend">Tipo de treino</legend>
+            <label class="calc__type"><input type="radio" name="treino" value="academia-cardio" data-slab-set data-mm="15" data-label="15 mm · Cardio e funcional" /> <span>Cardio e funcional</span></label>
+            <label class="calc__type"><input type="radio" name="treino" value="academia-musculacao" checked data-slab-set data-mm="20" data-label="20 mm · Musculação" /> <span>Musculação</span></label>
+            <label class="calc__type"><input type="radio" name="treino" value="academia-lpo" data-slab-set data-mm="40" data-label="40 mm · LPO e cross" /> <span>LPO e cross</span></label>
+          </fieldset>
+          <div class="calc__sizes">
+            <label class="field">Comprimento (m)<input class="input nums" name="comprimento" inputmode="decimal" value="6" autocomplete="off" /></label>
+            <label class="field">Largura (m)<input class="input nums" name="largura" inputmode="decimal" value="4" autocomplete="off" /></label>
+          </div>
+          <div class="calc__result" aria-live="polite">
+            <p class="calc__number nums" data-calc-plates>26</p>
+            <p class="calc__detail" data-calc-detail>placas de 1 × 1 m com 20 mm · 25,20 m² com 5% de margem</p>
+          </div>
+          <a class="btn btn--lg btn--block" href="/produto/piso-de-borracha-1x1/?espessura=20&qtd=26" data-calc-link>
+            Escolher a cor e adicionar <Icon name="arrow-right" />
+          </a>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- instalação -->
+  <section class="section">
+    <div class="container install">
+      <figure class="install__media">
+        <Image
+          src={catalogImage('photos/obra-academia-borracha')}
+          alt="Instalador encaixando placas de piso de borracha em uma academia"
+          widths={[360, 540]}
+          sizes="(min-width: 60em) 28vw, 90vw"
+          format="webp"
+          quality={78}
+          loading="lazy"
+        />
+      </figure>
+      <figure class="install__media install__media--tall">
+        <Image
+          src={catalogImage('photos/obra-academia-vinilico')}
+          alt="Academia com piso vinílico amadeirado entre os aparelhos"
+          widths={[360, 540]}
+          sizes="(min-width: 60em) 28vw, 90vw"
+          format="webp"
+          quality={78}
+          loading="lazy"
+        />
+      </figure>
+      <div class="install__copy">
+        <h2 class="kicker-line">Do pedido ao piso instalado</h2>
+        <p>
+          Antes de comprar, tire suas dúvidas com quem entende: espessura de borracha para cada treino, piso vinílico colado ou
+          SPC, quantidade de caixas e preparação do contrapiso.
+        </p>
+        <ul class="install__list">
+          <li><Icon name="check" size={18} /> Indicação do produto certo para o seu ambiente</li>
+          <li><Icon name="check" size={18} /> Quantidade calculada com margem de recorte</li>
+          <li><Icon name="check" size={18} /> Guia completo de instalação de piso vinílico</li>
+        </ul>
+        <div class="install__actions">
+          <a class="btn" href="/como-instalar-piso-vinilico/"><Icon name="tool" size={18} /> Ver guia de instalação</a>
+          <a class="btn btn--ghost" href={whatsappHref} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} /> Tirar dúvidas</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- perguntas -->
+  <section class="section section--tint">
+    <div class="container faq">
+      <div>
+        <h2 class="kicker-line">Perguntas frequentes</h2>
+        <p class="muted">Não achou sua dúvida? <a class="link" href={whatsappHref} target="_blank" rel="noopener">Chame no WhatsApp</a>.</p>
+      </div>
+      <div class="faq__list">
+        {
+          faq.map((item, i) => (
+            <details class="faq__item" open={i === 0}>
+              <summary>{item.q}</summary>
+              <p>{item.a}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import { wireHomeCalculator } from '../scripts/home-calculator';
+  import { wireSlab } from '../scripts/slab3d';
+
+  const calc = document.querySelector<HTMLElement>('[data-home-calc]');
+  if (calc) wireHomeCalculator(calc);
+  const section = document.getElementById('calculadora');
+  if (section) wireSlab(section, window);
+</script>
+
+<style>
+  /* valores */
+  .values { padding-block: 1.5rem 0.5rem; }
+  .values__list { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 0.75rem; }
+  .values__item {
+    display: flex; gap: 0.9rem; align-items: flex-start; padding: 1.1rem 1.15rem; border-radius: var(--radius-lg);
+    background: var(--surface); cursor: default; transition: background-color 220ms var(--ease-out), transform 260ms var(--ease-out);
+  }
+  .values__icon {
+    display: grid; place-items: center; width: 2.9rem; height: 2.9rem; border-radius: 12px; flex: none;
+    background: #fff; color: var(--gold-ink); transition: background-color 220ms var(--ease-out), color 220ms var(--ease-out);
+  }
+  .values__title { font-weight: 700; font-size: 0.9375rem; }
+  .values__text { font-size: 0.8125rem; color: var(--muted); margin-top: 0.15rem; }
+  @media (hover: hover) and (pointer: fine) {
+    .values__item:hover { background: var(--gold-soft); box-shadow: 0 16px 34px -18px rgb(140 90 6 / 0.45); }
+    .values__item:hover .values__icon { background: var(--black); color: var(--gold); }
+  }
+
+  /* categorias */
+  .cats { display: grid; gap: 0.75rem; }
+  .cats--floors { grid-template-columns: 1fr; margin-bottom: 0.75rem; }
+  .cats--fitness { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cat {
+    display: flex; flex-direction: column; text-decoration: none; color: inherit; border-radius: var(--radius-lg);
+    background: var(--surface); overflow: hidden; transition: transform 520ms var(--ease-out), background-color var(--t-hover) ease, box-shadow 320ms var(--ease-out);
+  }
+  .cat__media { display: block; aspect-ratio: 4 / 3; background: #fff; margin: 0.6rem 0.6rem 0; border-radius: 12px; overflow: hidden; }
+  .cat__media :global(.cat__img) { width: 100%; height: 100%; object-fit: contain; padding: 8%; transition: transform 320ms var(--ease-out); }
+  .cat__media--cover :global(.cat__img) { object-fit: cover; padding: 0; }
+  .cat__body { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; padding: 0.85rem 1rem 1rem; }
+  .cat__name { font-weight: 700; font-size: 0.9375rem; line-height: 1.25; }
+  .cat__meta { font-size: 0.8125rem; color: var(--muted); white-space: nowrap; }
+  .cat--big .cat__media { aspect-ratio: 16 / 9; }
+  .cat--big .cat__name { font-size: 1.125rem; }
+  @media (hover: hover) and (pointer: fine) {
+    .cat:hover { background: var(--gold-soft); box-shadow: 0 20px 40px -22px rgb(140 90 6 / 0.5); }
+    .cat:hover :global(.cat__img) { transform: scale(1.05); }
+  }
+  .cat:active { opacity: 0.92; }
+  @media (min-width: 48em) {
+    .cats--floors { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .cats--fitness { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+
+  /* vitrine vinílicos */
+  .vinyl-rail {
+    display: grid; grid-auto-flow: column; grid-auto-columns: 11rem; gap: 0.9rem; overflow-x: auto;
+    padding: 0.25rem max(var(--margin), calc((100vw - var(--container)) / 2 + var(--margin))) 1rem;
+    scroll-snap-type: x mandatory; scrollbar-width: thin;
+  }
+  .vinyl-card { display: grid; gap: 0.2rem; text-decoration: none; color: inherit; scroll-snap-align: start; }
+  .vinyl-card :global(.vinyl-card__img) { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; margin-bottom: 0.5rem; transition: transform 260ms var(--ease-out); }
+  .vinyl-card__name { font-weight: 700; font-size: 0.875rem; line-height: 1.3; }
+  .vinyl-card__meta { font-size: 0.8125rem; color: var(--muted); }
+  @media (hover: hover) and (pointer: fine) { .vinyl-card:hover :global(.vinyl-card__img) { transform: translateY(-3px); } }
+  @media (min-width: 48em) { .vinyl-rail { grid-auto-columns: 13rem; } }
+
+  /* calculadora */
+  .calc { display: grid; gap: 2rem; align-items: start; }
+  .calc__intro p { margin-top: 0.75rem; max-width: 46ch; }
+  .calc__slab { margin-top: 1.5rem; padding: 1.5rem 0 1rem; border-radius: 20px; background: linear-gradient(160deg, #fff 0%, #fbf1dc 100%); }
+  .calc__card { background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: clamp(1.25rem, 3vw, 2rem); }
+  .calc__form { display: grid; gap: 1.25rem; }
+  .calc__types { border: 0; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .calc__legend { font-weight: 700; font-size: 0.9375rem; margin-bottom: 0.6rem; padding: 0; }
+  .calc__type { position: relative; cursor: pointer; }
+  .calc__type input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+  .calc__type span {
+    display: inline-flex; align-items: center; min-height: 2.6rem; padding: 0.45rem 1rem; border-radius: 999px;
+    border: 1px solid var(--line); font-size: 0.875rem; font-weight: 600; transition: background-color var(--t-hover) ease, color var(--t-hover) ease, border-color var(--t-hover) ease;
+  }
+  .calc__type input:checked + span { background: var(--gold); border-color: var(--gold); color: var(--black); }
+  .calc__type input:focus-visible + span { outline: 3px solid var(--gold); outline-offset: 2px; }
+  .calc__sizes { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .calc__result { padding: 1.25rem; border-radius: var(--radius-lg); background: var(--gold-soft); }
+  .calc__number { font-size: clamp(2.75rem, 2rem + 3vw, 3.75rem); font-weight: 800; font-stretch: 108%; line-height: 1; letter-spacing: -0.03em; color: var(--black); }
+  .calc__detail { margin-top: 0.4rem; color: var(--gold-ink); font-weight: 600; font-size: 0.9375rem; }
+  .calc :global([aria-disabled='true']) { opacity: 0.45; pointer-events: none; }
+  @media (min-width: 60em) { .calc { grid-template-columns: 1fr 1fr; gap: 4rem; } }
+
+  /* instalação */
+  .install { display: grid; gap: 1rem; align-items: center; }
+  .install__media { border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 3 / 4; }
+  .install__media :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .install__copy p { margin-top: 0.75rem; color: #333; max-width: 52ch; }
+  .install__list { display: grid; gap: 0.6rem; margin-top: 1.25rem; }
+  .install__list li { display: flex; gap: 0.55rem; align-items: center; font-weight: 600; font-size: 0.9375rem; }
+  .install__list :global(svg) { color: var(--gold); flex: none; }
+  .install__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; }
+  @media (max-width: 59.99em) {
+    .install { grid-template-columns: 1fr 1fr; }
+    .install__copy { grid-column: 1 / -1; }
+  }
+  @media (min-width: 60em) {
+    .install { grid-template-columns: 0.8fr 0.8fr 1.3fr; gap: 1.25rem; }
+    .install__media--tall { margin-top: 3rem; }
+    .install__copy { padding-left: 2rem; }
+  }
+
+  /* perguntas */
+  .faq { display: grid; gap: 2rem; }
+  .faq > div > p { margin-top: 0.75rem; }
+  .faq__list { display: grid; gap: 0.6rem; }
+  .faq__item { background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 0 1.25rem; }
+  .faq__item summary {
+    cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    padding: 1.1rem 0; font-weight: 700;
+  }
+  .faq__item summary::-webkit-details-marker { display: none; }
+  .faq__item summary::after { content: '+'; font-size: 1.4rem; font-weight: 400; color: var(--gold-ink); transition: transform 200ms var(--ease-out); }
+  .faq__item[open] summary::after { transform: rotate(45deg); }
+  .faq__item p { padding-bottom: 1.2rem; color: #333; max-width: 68ch; }
+  @media (min-width: 60em) { .faq { grid-template-columns: 0.8fr 1.2fr; gap: 4rem; } }
+</style>

@@ -1,0 +1,86 @@
+---
+import ProductCard from './ProductCard.astro';
+import { CATEGORIES, categoryPath, type CategoryId, type Product } from '../data/catalog';
+
+interface Props {
+  products: Product[];
+  heading: string;
+  intro: string;
+  activeCategory?: CategoryId;
+  searchable?: boolean;
+}
+
+const { products, heading, intro, activeCategory, searchable = false } = Astro.props;
+---
+
+<section class="store">
+  <div class="container">
+    <header class="store__head">
+      <div>
+        <h1 class="store__title">{heading}</h1>
+        <p class="store__intro">{intro}</p>
+      </div>
+      <p class="store__count small muted" data-store-count>{products.length} produtos</p>
+    </header>
+
+    <nav class="chips" aria-label="Filtrar por categoria">
+      <a class="chip" href="/loja/" aria-current={!activeCategory ? 'page' : undefined}>Todos</a>
+      {
+        CATEGORIES.map((c) => (
+          <a class="chip" href={categoryPath(c.id)} aria-current={activeCategory === c.id ? 'page' : undefined}>
+            {c.shortName}
+          </a>
+        ))
+      }
+    </nav>
+
+    {
+      searchable && (
+        <p class="store__search-status" data-search-status hidden>
+          <span data-search-text></span> <a class="link" href="/loja/">Limpar busca</a>
+        </p>
+      )
+    }
+
+    <h2 class="sr-only">Produtos</h2>
+    <div class="product-grid" data-store-grid>
+      {products.map((p, i) => <ProductCard product={p} eager={i < 4} />)}
+    </div>
+
+    <div class="store__empty" data-store-empty hidden>
+      <p class="store__empty-title">Nenhum produto encontrado.</p>
+      <p class="muted">Tente outra palavra ou chame a gente no WhatsApp que encontramos para você.</p>
+    </div>
+  </div>
+</section>
+
+{
+  searchable && (
+    <script>
+      import { wireStoreSearch } from '../scripts/store-search';
+
+      wireStoreSearch(document, window.location);
+    </script>
+  )
+}
+
+<style>
+  .store { padding-block: 1.5rem clamp(3rem, 6vw, 5rem); }
+  .store__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1rem 2rem; margin-bottom: 1.5rem; }
+  .store__title { font-size: clamp(1.875rem, 1.4rem + 2vw, 2.75rem); }
+  .store__intro { margin-top: 0.6rem; color: var(--muted); max-width: 60ch; }
+  .chips { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.5rem; margin-bottom: 1.5rem; scrollbar-width: none; }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip {
+    flex: none; padding: 0.55rem 1rem; border-radius: 999px; border: 1px solid var(--line); background: #fff;
+    font-size: 0.875rem; font-weight: 600; text-decoration: none; color: var(--ink); white-space: nowrap;
+    transition: border-color var(--t-hover) ease, background-color var(--t-hover) ease, color var(--t-hover) ease;
+  }
+  .chip[aria-current='page'] { background: var(--gold); border-color: var(--gold); color: var(--black); }
+  @media (hover: hover) and (pointer: fine) { .chip:not([aria-current]):hover { border-color: var(--ink); } }
+  .store__search-status { margin: -0.5rem 0 1.25rem; font-weight: 600; }
+  .store__search-status[hidden] { display: none; }
+  .store__empty { text-align: center; padding: 3rem 1rem; }
+  .store__empty[hidden] { display: none; }
+  .store__empty-title { font-weight: 700; font-size: 1.125rem; margin-bottom: 0.4rem; }
+</style>

@@ -1,0 +1,421 @@
+---
+import { Image, getImage } from 'astro:assets';
+import Icon from './Icon.astro';
+import Slab3D from './Slab3D.astro';
+import { categoryPath, productPath } from '../data/catalog';
+import { catalogImage, catalogImageUrl } from '../lib/catalog-images';
+import rubberTexture from '../assets/textures/borracha.jpg';
+
+const swatches = [
+  ['durafloor-nativa', 'manaus', 'Manaus', 'Durafloor Nativa'],
+  ['durafloor-art', 'atenas', 'Atenas', 'Durafloor Art'],
+  ['espacofloor-soft', 'fresno-blanco', 'Fresno Blanco', 'EspaçoFloor Soft'],
+  ['espacofloor-royal-mild', 'nut-colorado', 'Nut Colorado', 'EspaçoFloor Royal Mild'],
+  ['durafloor-city', 'oslo', 'Oslo', 'Durafloor City'],
+  ['espacofloor-office-plus-plus', 'grafitto', 'Grafitto', 'EspaçoFloor Office Plus+'],
+  ['durafloor-urban', 'tulum', 'Tulum', 'Durafloor Urban'],
+  ['espacofloor-royal-wood', 'oak-arizona', 'Oak Arizona', 'EspaçoFloor Royal Wood'],
+  ['durafloor-city', 'barbados', 'Barbados', 'Durafloor City'],
+  ['durafloor-inova', 'paris', 'Paris', 'Durafloor Inova'],
+  ['espacofloor-office-square', 'marble-luna', 'Marble Luna', 'EspaçoFloor Office Square'],
+  ['spot-pisos-home', 'oxford', 'Oxford', 'Spot Pisos Home'],
+].map(([line, color, colorName, lineName]) => ({
+  image: `vinyl/${line}/${color}`,
+  href: `${productPath({ slug: `piso-vinilico-${line}` })}`,
+  label: `${colorName} · ${lineName}`,
+}));
+const swatchTextures = await Promise.all(swatches.map((s) => catalogImageUrl(s.image, 480)));
+const rubberTex = (await getImage({ src: rubberTexture, width: 512, format: 'webp', quality: 80 })).src;
+
+const weights = [
+  { slug: 'anilha-sport-vazada-emborrachada', label: 'Anilhas · 1 a 25 kg', pos: 'plate' },
+  { slug: 'kettlebell-pintado', label: 'Kettlebells · 4 a 32 kg', pos: 'kettle' },
+  { slug: 'dumbbell-sextavado-emborrachado-pegada-cromada', label: 'Dumbbells · até 100 kg', pos: 'dumb' },
+  { slug: 'halter-sextavado-emborrachado-pegada-cromada', label: 'Halteres · 1 a 10 kg', pos: 'halter' },
+];
+
+const thickness = [
+  { mm: 15, use: 'Cardio e funcional' },
+  { mm: 20, use: 'Musculação e peso livre' },
+  { mm: 25, use: 'Peso livre pesado' },
+  { mm: 30, use: 'Cross training' },
+  { mm: 40, use: 'LPO e drop de barra' },
+  { mm: 50, use: 'Plataforma e áreas de impacto' },
+];
+
+const tabs = ['Pisos e pesos', 'Vinílicos', 'Fitness', 'Borracha'];
+---
+
+<section class="hero" aria-roledescription="carrossel" aria-label="Destaques da loja" data-hero-slider>
+  <div class="container">
+    <div class="hero__stage">
+      <!-- 1. pisos e pesos -->
+      <article class="hero__slide is-active" data-slide id="destaque-1" role="group" aria-roledescription="slide" aria-label="1 de 4: Pisos e pesos">
+        <div class="hero__copy">
+          <h1 class="hero__title">
+            Do piso ao peso.
+            <span class="hero__title-sub">Pisos vinílicos, de borracha e equipamentos fitness.</span>
+          </h1>
+          <p class="hero__lead">
+            Escolha o modelo, a cor, o peso ou a espessura, monte o carrinho e finalize pelo WhatsApp com valor e frete para a
+            sua cidade.
+          </p>
+          <div class="hero__actions">
+            <a class="btn btn--gold btn--lg" href="/loja/">Ver produtos <Icon name="arrow-right" /></a>
+            <a class="btn btn--ghost btn--lg" href="#calculadora"><Icon name="ruler" /> Calcular meu piso</a>
+          </div>
+          <ul class="hero__trust">
+            <li><span class="hero__trust-icon"><Icon name="whatsapp" /></span> Pedido pelo WhatsApp</li>
+            <li><span class="hero__trust-icon"><Icon name="truck" /></span> Frete pelo CEP</li>
+            <li><span class="hero__trust-icon"><Icon name="chat" /></span> Ajuda na escolha</li>
+          </ul>
+        </div>
+        <div class="hero__visual hero__visual--photo">
+          <div class="hero__photo">
+            <Image
+              src={catalogImage('photos/obra-academia-piso-madeira')}
+              alt="Piso vinílico amadeirado encontrando o piso de borracha em uma academia, com anilha sobre a borracha"
+              widths={[480, 720, 960]}
+              sizes="(min-width: 64em) 38vw, 100vw"
+              format="webp"
+              quality={80}
+              loading="eager"
+              fetchpriority="high"
+            />
+            <span class="hero__chip"><span class="hero__chip-dot" aria-hidden="true"></span>Vinílico e borracha na mesma academia</span>
+          </div>
+          <a class="float-card float-card--a" data-tilt="14" href={productPath({ slug: 'anilha-sport-vazada-emborrachada' })}>
+            <Image src={catalogImage('products/anilha-sport-vazada-emborrachada')} alt="" width={96} height={96} format="webp" loading="eager" />
+            <span><strong>Anilhas</strong>1 a 25 kg</span>
+          </a>
+          <a class="float-card float-card--b" data-tilt="14" href={productPath({ slug: 'kettlebell-pintado' })}>
+            <Image src={catalogImage('products/kettlebell-pintado')} alt="" width={96} height={96} format="webp" loading="eager" />
+            <span><strong>Kettlebells</strong>4 a 32 kg</span>
+          </a>
+        </div>
+      </article>
+
+      <!-- 2. vinílicos -->
+      <article class="hero__slide" data-slide data-slab-scope id="destaque-2" role="group" aria-roledescription="slide" aria-label="2 de 4: Vinílicos">
+        <div class="hero__copy">
+          <h2 class="hero__title">Piso vinílico em 95 cores</h2>
+          <p class="hero__lead">
+            Durafloor e EspaçoFloor em madeira, pedra e cimento, colado ou SPC. Toque numa cor para ver a linha completa.
+          </p>
+          <div class="hero__actions">
+            <a class="btn btn--lg" href={categoryPath('pisos-vinilicos')}>Ver pisos vinílicos <Icon name="arrow-right" /></a>
+            <a class="btn btn--ghost btn--lg" href="/como-instalar-piso-vinilico/"><Icon name="tool" /> Como instalar</a>
+          </div>
+        </div>
+        <div class="hero__visual hero__visual--slab">
+          <Slab3D
+            kind="vinilico"
+            texture={swatchTextures[0]}
+            thicknessMm={6}
+            label={swatches[0].label}
+            href={swatches[0].href}
+            linkLabel="Ver esta linha"
+          />
+          <ul class="swatch-row" aria-label="Escolha uma cor para ver na placa 3D">
+            {
+              swatches.map((sw, i) => (
+                <li style={`--i:${i}`}>
+                  <button
+                    class:list={['swatch-btn', i === 0 && 'is-current']}
+                    type="button"
+                    data-slab-set
+                    data-tex={swatchTextures[i]}
+                    data-label={sw.label}
+                    data-href={sw.href}
+                    aria-label={`Ver ${sw.label} na placa 3D`}
+                  >
+                    <Image src={catalogImage(sw.image)} alt="" width={120} height={120} format="webp" quality={75} loading="lazy" />
+                  </button>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </article>
+
+      <!-- 3. fitness -->
+      <article class="hero__slide" data-slide id="destaque-3" role="group" aria-roledescription="slide" aria-label="3 de 4: Fitness">
+        <div class="hero__copy">
+          <h2 class="hero__title">Pesos para treinar pesado</h2>
+          <p class="hero__lead">Anilhas de 1 a 25 kg, halteres, dumbbells até 100 kg, kettlebells, barras e puxadores para casa e academia.</p>
+          <div class="hero__actions">
+            <a class="btn btn--lg" href={categoryPath('anilhas')}>Ver anilhas <Icon name="arrow-right" /></a>
+            <a class="btn btn--ghost btn--lg" href={categoryPath('dumbbells')}>Ver dumbbells</a>
+          </div>
+        </div>
+        <div class="hero__visual">
+          <div class="weights" data-tilt="6">
+            {
+              weights.map((w) => (
+                <a class={`weights__item weights__item--${w.pos}`} href={productPath({ slug: w.slug })}>
+                  <Image src={catalogImage(`products/${w.slug}`)} alt="" width={320} height={320} format="webp" quality={80} loading="lazy" />
+                  <span class="weights__label">{w.label}</span>
+                </a>
+              ))
+            }
+          </div>
+        </div>
+      </article>
+
+      <!-- 4. borracha -->
+      <article class="hero__slide" data-slide data-slab-scope id="destaque-4" role="group" aria-roledescription="slide" aria-label="4 de 4: Borracha">
+        <div class="hero__copy">
+          <h2 class="hero__title">Piso de borracha para academia</h2>
+          <p class="hero__lead">Placas de 1 × 1 m em 7 cores. Escolha a espessura pelo tipo de treino:</p>
+          <ul class="thick" aria-label="Espessuras de piso de borracha">
+            {
+              thickness.map((t) => (
+                <li>
+                  <a
+                    class:list={['thick__chip', t.mm === 20 && 'is-current']}
+                    href={`${productPath({ slug: 'piso-de-borracha-1x1' })}?espessura=${t.mm}`}
+                    data-slab-set
+                    data-mm={t.mm}
+                    data-label={`${t.mm} mm · ${t.use}`}
+                  >
+                    <strong class="nums">{t.mm} mm</strong>
+                    <span>{t.use}</span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+          <div class="hero__actions">
+            <a class="btn btn--lg" href="#calculadora"><Icon name="grid" /> Calcular placas</a>
+            <a class="btn btn--ghost btn--lg" href={categoryPath('pisos-de-borracha')}>Ver piso de borracha</a>
+          </div>
+        </div>
+        <div class="hero__visual hero__visual--slab">
+          <Slab3D
+            kind="borracha"
+            texture={rubberTex}
+            thicknessMm={20}
+            label="20 mm · Musculação e peso livre"
+            href={productPath({ slug: 'piso-de-borracha-1x1' })}
+            linkLabel="Ver placa 1 × 1 m"
+          />
+          <p class="hero__hint">Passe o mouse nas espessuras para ver a placa mudar.</p>
+        </div>
+      </article>
+
+      <div class="hero__controls">
+        <div class="hero__tabs" role="tablist" aria-label="Escolher destaque">
+          {
+            tabs.map((label, i) => (
+              <button class="hero__tab" type="button" role="tab" data-slide-tab aria-controls={`destaque-${i + 1}`} aria-selected={i === 0 ? 'true' : 'false'}>
+                <span class="hero__tab-label">{label}</span>
+                <span class="hero__tab-bar" aria-hidden="true"><span></span></span>
+              </button>
+            ))
+          }
+        </div>
+        <div class="hero__nav">
+          <button class="hero__arrow" type="button" data-slide-toggle aria-pressed="false" aria-label="Pausar troca automática">
+            <svg class="hero__pause" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 5v14M16 5v14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" /></svg>
+            <svg class="hero__play" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M8 5.5v13l10-6.5z" fill="currentColor" /></svg>
+          </button>
+          <button class="hero__arrow" type="button" data-slide-prev aria-label="Destaque anterior">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </button>
+          <button class="hero__arrow" type="button" data-slide-next aria-label="Próximo destaque">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { wireHeroSlider } from '../scripts/hero-slider';
+  import { wireSlab } from '../scripts/slab3d';
+
+  document.querySelectorAll<HTMLElement>('[data-slab-scope]').forEach((scope) => wireSlab(scope, window));
+
+  const root = document.querySelector<HTMLElement>('[data-hero-slider]');
+  if (root) {
+    wireHeroSlider(root, { win: window, autoplay: !window.matchMedia('(prefers-reduced-motion: reduce)').matches });
+  }
+</script>
+
+<style>
+  .hero { padding-block: clamp(1rem, 2.5vw, 1.75rem) 0; }
+  .hero__stage {
+    position: relative; display: grid; grid-template-columns: minmax(0, 1fr); border-radius: 28px; background: linear-gradient(135deg, #fbf3e2 0%, #f6efe1 55%, #f3e6cc 100%); overflow: hidden;
+    padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1.25rem, 4vw, 4rem) clamp(5.5rem, 8vw, 6.5rem);
+  }
+  @media (min-width: 64em) {
+    .hero__stage { min-height: clamp(560px, calc(85svh - 7.5rem), 900px); }
+  }
+
+  /* slides empilhados na mesma célula: a altura é a do maior */
+  .hero__slide {
+    grid-area: 1 / 1; display: grid; grid-template-columns: minmax(0, 1fr); min-width: 0; gap: clamp(1.75rem, 4vw, 3rem); align-items: center;
+    opacity: 0; visibility: hidden; transition: opacity 600ms var(--ease-out), visibility 0s linear 600ms;
+  }
+  .hero__slide.is-active { opacity: 1; visibility: visible; transition: opacity 600ms var(--ease-out), visibility 0s; }
+  :global(html:not(.js)) .hero__slide:not(:first-of-type) { display: none; }
+
+  .hero__copy { min-width: 0; }
+  .hero__title { font-size: clamp(2.25rem, 1.3rem + 3vw, 4.4rem); line-height: 1; letter-spacing: -0.035em; max-width: 15ch; }
+  .hero__title-sub {
+    display: block; margin-top: 0.75rem; font-size: clamp(1.2rem, 0.95rem + 1vw, 1.75rem); font-weight: 600;
+    letter-spacing: -0.015em; line-height: 1.2; color: var(--muted); max-width: 26ch;
+  }
+  .hero__title::after { content: ''; display: block; width: 3.5rem; height: 4px; border-radius: 2px; background: var(--gold); margin-top: 1.4rem; }
+  .hero__lead { margin-top: 1.25rem; font-size: var(--step-lead); color: #333; max-width: 46ch; }
+  .hero__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; }
+  .hero__trust { display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem; margin-top: 1.75rem; font-size: 0.875rem; font-weight: 600; color: #444; }
+  .hero__trust li { display: inline-flex; align-items: center; gap: 0.5rem; border-radius: 999px; padding-right: 0.25rem; cursor: default; }
+  .hero__trust-icon {
+    display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 50%;
+    background: #fff; color: var(--gold-ink); transition: background-color var(--t-hover) ease, color var(--t-hover) ease;
+  }
+  @media (hover: hover) and (pointer: fine) { .hero__trust li:hover .hero__trust-icon { background: var(--gold); color: var(--black); } }
+
+  /* entrada do conteúdo quando o slide fica ativo */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__slide.is-active .hero__copy > * { animation: hero-rise 700ms var(--ease-out) both; }
+    .hero__slide.is-active .hero__copy > :nth-child(2) { animation-delay: 70ms; }
+    .hero__slide.is-active .hero__copy > :nth-child(3) { animation-delay: 140ms; }
+    .hero__slide.is-active .hero__copy > :nth-child(4) { animation-delay: 210ms; }
+    .hero__slide.is-active .hero__visual { animation: hero-visual 900ms var(--ease-out) both 80ms; }
+  }
+  @keyframes hero-rise { from { opacity: 0; transform: translateY(14px); } }
+  @keyframes hero-visual { from { opacity: 0; transform: translateY(10px) scale(0.985); } }
+
+  /* visual: foto */
+  .hero__visual { position: relative; min-width: 0; }
+  .hero__photo { position: relative; border-radius: 22px; overflow: hidden; aspect-ratio: 4 / 3.4; background: #e6e4de; }
+  .hero__photo :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .hero__chip {
+    position: absolute; left: 1rem; bottom: 1rem; display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.5rem 0.85rem; border-radius: 999px; background: rgb(255 255 255 / 0.95); font-size: 0.8125rem; font-weight: 650;
+  }
+  .hero__chip-dot { width: 0.55rem; height: 0.55rem; border-radius: 50%; background: var(--gold); }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__chip-dot { animation: dot-pulse 2.4s ease-in-out infinite; }
+  }
+  @keyframes dot-pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.55; } }
+
+  .float-card {
+    position: absolute; display: flex; align-items: center; gap: 0.6rem; padding: 0.45rem 0.9rem 0.45rem 0.45rem;
+    border-radius: 16px; background: #fff; text-decoration: none; color: var(--ink); font-size: 0.8125rem; line-height: 1.25;
+    box-shadow: 0 12px 30px rgb(0 0 0 / 0.12); /* taste-skill-ignore: cartão flutuante sobre a foto */
+    transition: transform 260ms var(--ease-out);
+  }
+  .float-card :global(img) { width: 3.25rem; height: 3.25rem; object-fit: contain; }
+  .float-card strong { display: block; font-size: 0.875rem; }
+  .float-card--a { left: -0.75rem; top: 12%; }
+  .float-card--b { right: -0.5rem; bottom: 16%; }
+  @media (prefers-reduced-motion: no-preference) {
+    .float-card--a { animation: float 6s ease-in-out infinite; }
+    .float-card--b { animation: float 6s ease-in-out -3s infinite; }
+  }
+  @media (hover: hover) and (pointer: fine) { .float-card:hover { animation-play-state: paused; box-shadow: 0 22px 44px -10px rgb(140 90 6 / 0.35); } }
+  @keyframes float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+
+  /* visual: placa 3D + cores */
+  .hero__visual--slab { display: grid; justify-items: center; gap: 1.25rem; }
+  .swatch-row { display: grid; grid-template-columns: repeat(6, minmax(0, 3.5rem)); gap: 0.5rem; justify-content: center; }
+  .swatch-btn {
+    display: block; width: 100%; aspect-ratio: 1; border-radius: 12px; overflow: hidden; outline: 2px solid transparent; outline-offset: 2px;
+    transition: transform 220ms var(--ease-out), outline-color 160ms ease;
+  }
+  .swatch-btn :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .swatch-btn.is-current { outline-color: var(--gold); }
+  .swatch-btn:focus-visible { outline-color: var(--black); }
+  .swatch-btn:active { transform: scale(0.94); }
+  @media (hover: hover) and (pointer: fine) { .swatch-btn:hover { transform: translateY(-3px) scale(1.06); } }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__slide.is-active .swatch-row li { animation: tile-in 480ms var(--ease-out) both; animation-delay: calc(var(--i) * 35ms + 150ms); }
+  }
+  @keyframes tile-in { from { opacity: 0; transform: translateY(10px) scale(0.92); } }
+  .hero__hint { font-size: 0.8125rem; color: var(--muted); }
+  .thick__chip.is-current { border-color: var(--gold); background: var(--gold-soft); }
+
+  /* visual: pesos */
+  /* as fotos têm fundo branco: o painel branco faz elas parecerem recortadas */
+  .weights { position: relative; transition: transform 520ms var(--ease-out); aspect-ratio: 1.15; max-width: 40rem; margin-inline: auto; border-radius: 24px; background: #fff; overflow: hidden; }
+  .weights::before {
+    content: ''; position: absolute; left: 50%; top: 50%; width: 46%; aspect-ratio: 1; translate: -50% -50%;
+    border-radius: 50%; border: 10px solid var(--gold-soft);
+  }
+  .weights__item { position: absolute; display: block; text-decoration: none; color: var(--ink); transition: transform 280ms var(--ease-out); }
+  .weights__item :global(img) { width: 100%; height: auto; }
+  .weights__item--plate { left: 22%; top: 10%; width: 44%; }
+  .weights__item--kettle { right: 4%; top: 6%; width: 26%; }
+  .weights__item--dumb { right: 3%; bottom: 4%; width: 34%; }
+  .weights__item--halter { left: 3%; bottom: 4%; width: 32%; }
+  .weights__label {
+    position: absolute; left: 50%; bottom: 0; translate: -50% 0; white-space: nowrap; padding: 0.3rem 0.65rem; border-radius: 999px;
+    background: var(--black); color: #fff; font-size: 0.75rem; font-weight: 650; opacity: 0; transition: opacity 200ms var(--ease-out);
+  }
+  .weights__item:focus-visible .weights__label { opacity: 1; }
+  @media (hover: hover) and (pointer: fine) {
+    .weights__item:hover { transform: scale(1.06) rotate(-2deg); z-index: 2; }
+    .weights__item:hover .weights__label { opacity: 1; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .weights__item--plate { animation: float 7s ease-in-out infinite; }
+    .weights__item--kettle { animation: float 6s ease-in-out -2s infinite; }
+    .weights__item--dumb { animation: float 6.5s ease-in-out -4s infinite; }
+    .weights__item--halter { animation: float 5.5s ease-in-out -1s infinite; }
+  }
+
+  /* espessuras */
+  .thick { display: grid; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: 0.5rem; margin-top: 1.25rem; max-width: 34rem; }
+  .thick__chip {
+    display: grid; gap: 0.1rem; padding: 0.6rem 0.8rem; border-radius: 12px; background: #fff; text-decoration: none; color: var(--ink);
+    border: 1px solid transparent; transition: border-color var(--t-hover) ease, transform 200ms var(--ease-out), background-color var(--t-hover) ease;
+  }
+  .thick__chip strong { font-size: 1.0625rem; font-stretch: 104%; }
+  .thick__chip span { font-size: 0.75rem; color: var(--muted); line-height: 1.3; }
+  .thick__chip:active { transform: scale(0.97); }
+  @media (hover: hover) and (pointer: fine) { .thick__chip:hover { border-color: var(--gold); background: var(--gold-soft); transform: translateY(-2px); } }
+
+  /* controles */
+  .hero__controls {
+    position: absolute; left: clamp(1.25rem, 4vw, 4rem); right: clamp(1.25rem, 4vw, 4rem); bottom: clamp(1.25rem, 2.5vw, 2rem);
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  }
+  :global(html:not(.js)) .hero__controls { display: none; }
+  .hero__tabs { display: flex; gap: 0.5rem; min-width: 0; flex: 1; max-width: 40rem; }
+  .hero__tab { flex: 1; display: grid; gap: 0.45rem; padding-block: 0.4rem; text-align: left; color: var(--muted); font-size: 0.8125rem; font-weight: 650; min-width: 0; }
+  .hero__tab[aria-selected='true'] { color: var(--ink); }
+  .hero__tab-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .hero__tab-bar { position: relative; height: 3px; border-radius: 2px; background: #dcdad3; overflow: hidden; }
+  .hero__tab-bar span { position: absolute; inset: 0; background: var(--gold); transform: scaleX(0); transform-origin: left; }
+  .hero__tab[aria-selected='true'] .hero__tab-bar span { transform: scaleX(1); }
+  .hero__tab.is-running .hero__tab-bar span { animation: tab-progress 7000ms linear both; }
+  @keyframes tab-progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  .hero__nav { display: flex; gap: 0.4rem; }
+  .hero__arrow {
+    display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border-radius: 50%; background: #fff; color: var(--ink);
+    transition: background-color var(--t-hover) ease, color var(--t-hover) ease, transform var(--t-press) var(--ease-out);
+  }
+  .hero__arrow:active { transform: scale(0.94); }
+  @media (hover: hover) and (pointer: fine) { .hero__arrow:hover { background: var(--black); color: #fff; } }
+  .hero__play { display: none; }
+  :global(.is-paused) .hero__play { display: block; }
+  :global(.is-paused) .hero__pause { display: none; }
+
+  @media (max-width: 47.99em) {
+    .hero__tab-label { font-size: 0.75rem; }
+    .hero__nav [data-slide-prev], .hero__nav [data-slide-next] { display: none; }
+    .float-card { font-size: 0.75rem; padding: 0.35rem 0.7rem 0.35rem 0.35rem; }
+    .float-card :global(img) { width: 2.6rem; height: 2.6rem; }
+    .float-card--a { left: 0.5rem; }
+    .float-card--b { right: 0.5rem; }
+  }
+
+  @media (min-width: 64em) {
+    .hero__slide { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 4vw, 5rem); }
+    .hero__photo { aspect-ratio: auto; height: clamp(420px, calc(85svh - 17rem), 680px); }
+  }
+</style>

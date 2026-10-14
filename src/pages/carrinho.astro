@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CartPanel from '../components/CartPanel.astro';
+import { BERVEX_SITE } from '../config/site';
+
+const breadcrumbs = [
+  { name: 'Início', path: '/' },
+  { name: 'Carrinho', path: '/carrinho/' },
+];
+---
+
+<BaseLayout
+  title="Carrinho | BERVEX"
+  description="Revise os itens do seu pedido e envie pelo WhatsApp para receber valor, frete e prazo."
+  breadcrumbs={breadcrumbs}
+  noindex
+>
+  <div class="container">
+    <Breadcrumbs items={breadcrumbs} />
+  </div>
+  <section class="container cart-page" data-whatsapp={BERVEX_SITE.whatsappNumber}>
+    <h1 class="cart-page__title">Seu carrinho</h1>
+    <CartPanel variant="page" />
+    <a class="link-arrow cart-page__more" href="/loja/">Continuar comprando</a>
+  </section>
+</BaseLayout>
+
+<script>
+  import { getBrowserCartStore } from '../scripts/cart-store';
+  import { wireCartRoot } from '../scripts/cart-ui';
+
+  const page = document.querySelector<HTMLElement>('.cart-page');
+  const root = page?.querySelector<HTMLElement>('[data-cart-root]');
+  if (page && root) {
+    wireCartRoot(root, getBrowserCartStore(), {
+      whatsappNumber: page.dataset.whatsapp ?? '',
+      openUrl: (url) => window.open(url, '_blank', 'noopener'),
+    });
+  }
+</script>
+
+<style>
+  .cart-page { max-width: 52rem; padding-bottom: clamp(3rem, 6vw, 5rem); }
+  .cart-page__title { font-size: clamp(1.875rem, 1.4rem + 2vw, 2.5rem); margin-bottom: 1rem; }
+  .cart-page__more { margin-top: 2rem; }
+</style>

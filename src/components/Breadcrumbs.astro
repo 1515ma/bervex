@@ -1,0 +1,30 @@
+---
+import type { Breadcrumb } from '../lib/structured-data';
+
+interface Props {
+  items: Breadcrumb[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav class="crumbs" aria-label="Você está em">
+  <ol>
+    {
+      items.map((item, i) => (
+        <li>
+          {i < items.length - 1 ? <a href={item.path}>{item.name}</a> : <span aria-current="page">{item.name}</span>}
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<style>
+  .crumbs { padding-block: 1rem; font-size: 0.8125rem; color: var(--muted); }
+  .crumbs ol { display: flex; flex-wrap: wrap; gap: 0.25rem 0.45rem; list-style: none; padding: 0; margin: 0; }
+  .crumbs li + li::before { content: '/'; margin-right: 0.45rem; color: #b5b5b0; }
+  .crumbs a { color: var(--muted); text-decoration: none; }
+  .crumbs [aria-current] { color: var(--ink); font-weight: 600; }
+  @media (hover: hover) and (pointer: fine) { .crumbs a:hover { color: var(--ink); text-decoration: underline; } }
+</style>

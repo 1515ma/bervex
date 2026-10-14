@@ -1,0 +1,165 @@
+---
+import Icon from './Icon.astro';
+import { BERVEX_SITE } from '../config/site';
+import { CATEGORIES, categoryPath } from '../data/catalog';
+import { buildWhatsAppLink } from '../lib/whatsapp-link';
+
+interface Props {
+  currentPath: string;
+  searchQuery?: string;
+}
+
+const { currentPath, searchQuery = '' } = Astro.props;
+const whatsappHref = buildWhatsAppLink(BERVEX_SITE.whatsappNumber, 'Olá, BERVEX! Vim pelo site.');
+const isCurrent = (href: string) => currentPath.startsWith(href);
+---
+
+<header class="site-header">
+  <div class="site-header__top">
+    <div class="container site-header__bar">
+      <a class="site-header__logo" href="/" aria-label="BERVEX, página inicial">
+        <picture>
+          <source srcset="/brand/bervex-lockup-96.webp" type="image/webp" />
+          <img src="/brand/bervex-lockup-96.png" alt="BERVEX" width="409" height="96" decoding="async" fetchpriority="high" />
+        </picture>
+      </a>
+
+      <form class="site-search" action="/loja/" method="get" role="search">
+        <label class="sr-only" for="busca-topo">Buscar produtos</label>
+        <Icon name="search" size={18} class="site-search__icon" />
+        <input
+          class="site-search__input"
+          id="busca-topo"
+          type="search"
+          name="q"
+          value={searchQuery}
+          placeholder="Buscar anilhas, halteres, piso vinílico…"
+          autocomplete="off"
+          enterkeyhint="search"
+        />
+      </form>
+
+      <div class="site-header__actions">
+        <a class="site-header__action site-header__whats" href={whatsappHref} target="_blank" rel="noopener">
+          <Icon name="whatsapp" size={22} />
+          <span class="site-header__action-text">
+            <small>Atendimento</small>
+            WhatsApp
+          </span>
+        </a>
+        <button class="site-header__action site-header__cart" type="button" data-cart-open aria-haspopup="dialog">
+          <span class="site-header__cart-icon">
+            <Icon name="cart" size={24} />
+            <span class="site-header__count" data-cart-count hidden>0</span>
+          </span>
+          <span class="site-header__action-text">
+            <small>Seu</small>
+            Carrinho
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <nav class="site-cats" aria-label="Categorias">
+    <ul class="container site-cats__list">
+      {
+        CATEGORIES.map((c) => (
+          <li>
+            <a
+              class="site-cats__link"
+              href={categoryPath(c.id)}
+              aria-current={isCurrent(categoryPath(c.id)) ? 'page' : undefined}
+            >
+              {c.shortName}
+            </a>
+          </li>
+        ))
+      }
+      <li>
+        <a class="site-cats__link site-cats__link--help" href="/como-instalar-piso-vinilico/" aria-current={isCurrent('/como-instalar') ? 'page' : undefined}>
+          Como instalar
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+  import { wireHeaderAutoHide } from '../scripts/header-auto-hide';
+
+  wireHeaderAutoHide(document, window);
+</script>
+
+<style>
+  .site-header { position: sticky; top: 0; z-index: 50; }
+  @media (prefers-reduced-motion: no-preference) { .site-header { transition: transform 240ms var(--ease-out); } }
+  .site-header.is-hidden { transform: translateY(-100%); }
+  .site-header:focus-within { transform: none; }
+
+  .site-header__top { background: var(--black); color: #fff; }
+  .site-header__bar {
+    display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.75rem 1.5rem;
+    min-height: var(--header-h); padding-block: 0.6rem;
+  }
+  .site-header__logo img { width: auto; height: 2.25rem; }
+
+  .site-search { position: relative; grid-column: 1 / -1; grid-row: 2; }
+  .site-search__input {
+    width: 100%; height: 2.75rem; padding: 0 1rem 0 2.6rem; border-radius: 999px; border: 0;
+    background: #fff; color: var(--ink); font-size: 0.9375rem;
+  }
+  .site-search__input:focus-visible { outline: 3px solid var(--gold); outline-offset: 1px; }
+  .site-search :global(.site-search__icon) { position: absolute; left: 0.95rem; top: 50%; translate: 0 -50%; color: var(--muted); pointer-events: none; }
+
+  .site-header__actions { display: flex; align-items: center; gap: 0.5rem; justify-self: end; }
+  .site-header__action {
+    display: inline-flex; align-items: center; gap: 0.55rem; padding: 0.4rem 0.5rem; border-radius: var(--radius);
+    color: #fff; text-decoration: none; font-weight: 650; font-size: 0.875rem; line-height: 1.1;
+    transition: background-color var(--t-hover) ease, transform var(--t-press) var(--ease-out);
+  }
+  .site-header__action:active { transform: scale(0.96); }
+  .site-header__action-text {
+    position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; text-align: left;
+  }
+  .site-header__action-text small { display: block; font-size: 0.75rem; font-weight: 500; color: #b9b9b5; }
+  .site-header__cart-icon { position: relative; display: inline-flex; }
+  .site-header__count {
+    position: absolute; top: -0.45rem; right: -0.55rem; min-width: 1.2rem; height: 1.2rem; padding: 0 0.3rem;
+    border-radius: 999px; background: var(--gold); color: var(--black); font-size: 0.75rem; font-weight: 800;
+    display: grid; place-items: center;
+  }
+  .site-header__count[hidden] { display: none; }
+  @media (hover: hover) and (pointer: fine) { .site-header__action:hover { background: #222; } }
+
+  .site-cats { background: #fff; border-bottom: 1px solid var(--line); }
+  .site-cats__list {
+    display: flex; gap: 0.25rem; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+  }
+  .site-cats__list::-webkit-scrollbar { display: none; }
+  .site-cats__link {
+    position: relative; display: block; padding: 0.8rem 0.7rem; white-space: nowrap; text-decoration: none;
+    font-size: 0.875rem; font-weight: 600; color: var(--muted); scroll-snap-align: start;
+    transition: color var(--t-hover) ease;
+  }
+  .site-cats__link::after {
+    content: ''; position: absolute; left: 0.7rem; right: 0.7rem; bottom: 0; height: 2px; border-radius: 2px;
+    background: var(--gold); transform: scaleX(0); transition: transform 220ms var(--ease-out);
+  }
+  .site-cats__link[aria-current='page'] { color: var(--ink); }
+  .site-cats__link[aria-current='page']::after { transform: scaleX(1); }
+  .site-cats__link--help { color: var(--gold-ink); }
+  @media (hover: hover) and (pointer: fine) {
+    .site-cats__link:hover { color: var(--ink); }
+    .site-cats__link:hover::after { transform: scaleX(1); }
+  }
+
+  @media (min-width: 60em) {
+    .site-header__bar { grid-template-columns: auto minmax(0, 36rem) auto; justify-content: space-between; }
+    .site-search { grid-column: auto; grid-row: auto; }
+    .site-header__logo img { height: 2.6rem; }
+    .site-header__action-text { position: static; width: auto; height: auto; overflow: visible; clip-path: none; white-space: normal; }
+    .site-cats__list { justify-content: space-between; }
+  }
+</style>

@@ -1,0 +1,88 @@
+---
+/** Conteúdo do carrinho (lista + fechamento), usado na gaveta lateral e na página /carrinho/. */
+import Icon from './Icon.astro';
+
+interface Props {
+  variant: 'drawer' | 'page';
+}
+
+const { variant } = Astro.props;
+const idSuffix = variant;
+---
+
+<div class:list={['cart-panel', `cart-panel--${variant}`]} data-cart-root>
+  <div class="cart-panel__empty" data-cart-empty>
+    <Icon name="cart" size={40} />
+    <p class="cart-panel__empty-title">Seu carrinho está vazio</p>
+    <p class="muted">Escolha pisos e equipamentos e monte seu pedido.</p>
+    <a class="btn" href="/loja/">Ver produtos</a>
+  </div>
+
+  <div class="cart-panel__filled" data-cart-filled hidden>
+    <p class="cart-panel__summary muted small" data-cart-summary></p>
+    <ul class="cart-panel__list" data-cart-list></ul>
+
+    <form class="cart-panel__checkout" data-cart-checkout>
+      <p class="cart-panel__how">
+        <Icon name="whatsapp" size={18} />
+        Você envia o pedido pelo WhatsApp e recebe valor, frete e prazo da nossa equipe.
+      </p>
+      <div class="cart-panel__fields">
+        <label class="field">
+          Seu nome
+          <input class="input" name="nome" autocomplete="name" placeholder="Como podemos te chamar?" id={`cart-nome-${idSuffix}`} />
+        </label>
+        <label class="field">
+          Cidade ou CEP
+          <input class="input" name="cidade" autocomplete="postal-code" placeholder="Para calcular o frete" id={`cart-cidade-${idSuffix}`} />
+        </label>
+      </div>
+      <button class="btn btn--gold btn--lg btn--block" type="submit">
+        <Icon name="whatsapp" /> Enviar pedido pelo WhatsApp
+      </button>
+    </form>
+  </div>
+</div>
+
+<style is:global>
+  .cart-panel__empty { display: grid; justify-items: center; gap: 0.6rem; text-align: center; padding: 3rem 1rem; color: var(--ink); }
+  .cart-panel__empty[hidden] { display: none; }
+  .cart-panel__empty svg { color: var(--gold); margin-bottom: 0.5rem; }
+  .cart-panel__empty-title { font-weight: 700; font-size: 1.125rem; }
+  .cart-panel__empty .btn { margin-top: 0.75rem; }
+  .cart-panel__filled[hidden] { display: none; }
+  .cart-panel__summary { margin-bottom: 0.5rem; }
+  .cart-panel__list { list-style: none; margin: 0; padding: 0; }
+
+  .cart-line { display: grid; grid-template-columns: 72px minmax(0, 1fr) auto; gap: 0.75rem; padding-block: 1rem; border-bottom: 1px solid var(--line); }
+  .cart-line__media { width: 72px; height: 72px; border-radius: 8px; border: 1px solid var(--line); overflow: hidden; background: #fff; }
+  .cart-line__img { width: 100%; height: 100%; object-fit: cover; }
+  .cart-line__name { font-weight: 650; text-decoration: none; line-height: 1.3; }
+  .cart-line__opts { color: var(--muted); font-size: 0.8125rem; margin-top: 0.2rem; }
+  .cart-line__qty { display: flex; align-items: center; gap: 0.35rem; margin-top: 0.6rem; }
+  .cart-line__unit { font-size: 0.8125rem; color: var(--muted); margin-left: 0.25rem; }
+  .cart-line__remove { align-self: start; display: grid; place-items: center; min-width: 2.75rem; min-height: 2.75rem; padding: 0.4rem; border-radius: 8px; color: var(--muted); transition: color var(--t-hover) ease, background-color var(--t-hover) ease; }
+  @media (hover: hover) and (pointer: fine) { .cart-line__remove:hover { color: var(--danger); background: #fbeaea; } }
+
+  .qty-btn {
+    display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 8px; border: 1px solid var(--line); background: #fff;
+    transition: border-color var(--t-hover) ease, transform var(--t-press) var(--ease-out);
+  }
+  .qty-btn:active { transform: scale(0.94); }
+  @media (hover: hover) and (pointer: fine) { .qty-btn:hover { border-color: var(--ink); } }
+  .qty-input {
+    width: 3.5rem; height: 2.25rem; border-radius: 8px; border: 1px solid var(--line); text-align: center; font-weight: 650;
+    -moz-appearance: textfield; appearance: textfield;
+  }
+  @media (pointer: coarse) {
+    .qty-btn { width: 2.75rem; height: 2.75rem; }
+    .qty-input { height: 2.75rem; }
+  }
+  .qty-input::-webkit-outer-spin-button, .qty-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+  .cart-panel__checkout { display: grid; gap: 1rem; margin-top: 1.25rem; }
+  .cart-panel__how { display: flex; gap: 0.6rem; align-items: flex-start; padding: 0.85rem 1rem; border-radius: var(--radius); background: var(--gold-soft); color: var(--gold-ink); font-size: 0.875rem; font-weight: 550; }
+  .cart-panel__how svg { flex: none; margin-top: 0.1rem; }
+  .cart-panel__fields { display: grid; gap: 0.75rem; }
+  .cart-panel--page .cart-panel__fields { grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
+</style>

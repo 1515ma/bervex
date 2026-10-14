@@ -1,0 +1,76 @@
+---
+import { Image } from 'astro:assets';
+import { CATEGORY_BY_ID, productPath, type Product } from '../data/catalog';
+import { catalogImage } from '../lib/catalog-images';
+
+interface Props {
+  product: Product;
+  eager?: boolean;
+}
+
+const { product, eager = false } = Astro.props;
+const category = CATEGORY_BY_ID[product.category];
+const optionHint = product.options
+  .map((o) => (o.values.length > 1 ? `${o.values.length} ${o.label.toLowerCase() === 'cor' ? 'cores' : 'opções de ' + o.label.toLowerCase()}` : null))
+  .filter(Boolean)
+  .slice(0, 2)
+  .join(' · ');
+const searchText = `${product.name} ${category.name} ${product.summary}`.toLowerCase();
+---
+
+<article class="product-card" data-product-card data-category={product.category} data-search={searchText} data-tilt="7">
+  <a class="product-card__link" href={productPath(product)}>
+    <div class="product-card__media">
+      <Image
+        src={catalogImage(product.image)}
+        alt={product.name}
+        widths={[240, 360, 480]}
+        sizes="(min-width: 72em) 280px, (min-width: 48em) 30vw, 46vw"
+        format="webp"
+        quality={80}
+        loading={eager ? 'eager' : 'lazy'}
+        decoding="async"
+        class:list={['product-card__img', product.category === 'pisos-vinilicos' && 'product-card__img--cover']}
+      />
+      {product.badge && <span class="badge product-card__badge" data-depth>{product.badge}</span>}
+    </div>
+    <div class="product-card__body">
+      <p class="product-card__cat">{category.shortName}</p>
+      <h3 class="product-card__name">{product.name}</h3>
+      <p class="product-card__summary">{product.summary}</p>
+      {optionHint && <p class="product-card__hint">{optionHint}</p>}
+      <span class="product-card__cta">Ver opções</span>
+    </div>
+    <span class="tilt-glare" aria-hidden="true"></span>
+  </a>
+</article>
+
+<style>
+  .product-card { height: 100%; border-radius: var(--radius-lg); }
+  .product-card[hidden] { display: none; }
+  .product-card__link {
+    display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;
+    position: relative; border: 1px solid var(--line); border-radius: var(--radius-lg); background: #fff; overflow: hidden;
+    transition: border-color var(--t-hover) ease, box-shadow 320ms var(--ease-out);
+  }
+  .product-card__media { position: relative; aspect-ratio: 1; background: #fff; border-bottom: 1px solid var(--line); }
+  .product-card__media :global(.product-card__img) { width: 100%; height: 100%; object-fit: contain; padding: 6%; transition: transform 320ms var(--ease-out); }
+  .product-card__media :global(.product-card__img--cover) { object-fit: cover; padding: 0; }
+  .product-card__badge { position: absolute; top: 0.75rem; left: 0.75rem; }
+  .product-card__body { display: flex; flex-direction: column; gap: 0.3rem; padding: 0.9rem 1rem 1.1rem; flex: 1; }
+  .product-card__cat { font-size: 0.8125rem; font-weight: 700; color: var(--gold-ink); letter-spacing: 0.02em; }
+  .product-card__name { font-size: 0.975rem; font-weight: 700; font-stretch: 100%; letter-spacing: -0.01em; line-height: 1.3; }
+  .product-card__summary { font-size: 0.875rem; color: var(--muted); line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .product-card__hint { font-size: 0.8125rem; color: var(--muted); font-weight: 600; }
+  .product-card__cta {
+    margin-top: auto; padding-top: 0.7rem; font-size: 0.875rem; font-weight: 700; color: var(--ink);
+    display: inline-flex; align-items: center; gap: 0.35rem;
+  }
+  .product-card__cta::after { content: '→'; transition: transform var(--t-hover) var(--ease-out); }
+  @media (hover: hover) and (pointer: fine) {
+    .product-card__link:hover { border-color: var(--gold); box-shadow: 0 18px 40px -18px rgb(140 90 6 / 0.45); }
+    .product-card__link:hover :global(.product-card__img) { transform: scale(1.04); }
+    .product-card__link:hover .product-card__cta::after { transform: translateX(3px); }
+  }
+  .product-card__link:active { opacity: 0.9; }
+</style>

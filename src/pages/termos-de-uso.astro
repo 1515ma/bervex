@@ -1,0 +1,124 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { BERVEX_SITE } from '../config/site';
+
+const sections = [
+  { id: 'aceite', title: 'Aceite dos termos' },
+  { id: 'como-funciona', title: 'Como funciona a compra' },
+  { id: 'produtos', title: 'Produtos, fotos e cores' },
+  { id: 'precos', title: 'Preços e pagamento' },
+  { id: 'entrega', title: 'Entrega e frete' },
+  { id: 'arrependimento', title: 'Direito de arrependimento' },
+  { id: 'trocas', title: 'Trocas e garantia' },
+  { id: 'instalacao', title: 'Instalação e uso' },
+  { id: 'propriedade', title: 'Propriedade intelectual' },
+  { id: 'responsabilidade', title: 'Responsabilidades' },
+  { id: 'alteracoes', title: 'Alterações e foro' },
+];
+---
+
+<LegalLayout
+  title="Termos de Uso e condições de compra | BERVEX"
+  description="Regras de uso do site BERVEX e condições de compra: pedido pelo WhatsApp, pagamento, entrega, direito de arrependimento, trocas e garantia."
+  heading="Termos de Uso"
+  intro="Estas regras valem para quem navega no site e para as compras feitas a partir dele. Elas seguem o Código de Defesa do Consumidor (Lei 8.078/1990) e o decreto do comércio eletrônico (Decreto 7.962/2013)."
+  path="/termos-de-uso/"
+  updated="13 de outubro de 2026"
+  sections={sections}
+>
+  <section id="aceite">
+    <h2>Aceite dos termos</h2>
+    <p>
+      Ao usar o site {BERVEX_SITE.url.replace('https://', '')} ou enviar um pedido, você concorda com estes termos e com a
+      <a class="link" href="/politica-de-privacidade/">Política de Privacidade</a>. Se não concordar, não use o site.
+    </p>
+  </section>
+
+  <section id="como-funciona">
+    <h2>Como funciona a compra</h2>
+    <ul>
+      <li>Você escolhe produtos e opções e monta o carrinho. O carrinho é só uma lista e não reserva estoque.</li>
+      <li>Ao enviar o pedido pelo WhatsApp, você recebe valor, frete, prazo e formas de pagamento.</li>
+      <li>A compra só é concluída quando você aprova o orçamento e o pagamento é confirmado. A partir daí vale o que foi combinado por escrito na conversa.</li>
+    </ul>
+  </section>
+
+  <section id="produtos">
+    <h2>Produtos, fotos e cores</h2>
+    <p>
+      As descrições e especificações vêm dos fabricantes e podem mudar sem aviso. As fotos são ilustrativas. Nos pisos, a cor e o
+      veio podem variar conforme a tela e o lote de fabricação; por isso, compre a metragem total de uma vez e confira o lote nas
+      caixas antes de instalar.
+    </p>
+  </section>
+
+  <section id="precos">
+    <h2>Preços e pagamento</h2>
+    <p>
+      Os preços são informados no orçamento e valem pelo prazo indicado nele. As formas de pagamento disponíveis são informadas na
+      conversa. Nunca pedimos senha ou código de verificação, e os dados para pagamento são sempre os da empresa.
+    </p>
+  </section>
+
+  <section id="entrega">
+    <h2>Entrega e frete</h2>
+    <p>
+      O frete e o prazo dependem do CEP, do peso e do volume e são informados antes da compra. Confira o pedido na entrega e
+      registre no comprovante qualquer avaria aparente na embalagem. Produtos pesados podem exigir acesso adequado para descarga.
+    </p>
+  </section>
+
+  <section id="arrependimento">
+    <h2>Direito de arrependimento</h2>
+    <p>
+      Como a compra é feita fora do estabelecimento, você pode desistir em até 7 dias corridos do recebimento (art. 49 do CDC).
+      Avise pelo WhatsApp ou e-mail; o produto deve voltar sem uso, sem instalação e, sempre que possível, na embalagem original.
+      Devolvemos o valor pago, inclusive o frete de ida.
+    </p>
+    <p class="note">Pisos cortados, colados ou instalados não podem ser devolvidos por arrependimento, porque não voltam ao estado original.</p>
+  </section>
+
+  <section id="trocas">
+    <h2>Trocas e garantia</h2>
+    <ul>
+      <li>Defeitos aparentes: reclame em até 90 dias do recebimento para produtos duráveis (art. 26 do CDC).</li>
+      <li>Defeitos de fabricação: além da garantia legal, vale a garantia do fabricante informada no produto ou no orçamento.</li>
+      <li>A garantia dos pisos vinílicos depende da instalação correta: veja o <a class="link" href="/como-instalar-piso-vinilico/">guia de instalação</a>.</li>
+      <li>Não são cobertos desgaste natural, uso inadequado, quedas, contrapiso fora das normas ou instalação em desacordo com o fabricante.</li>
+    </ul>
+  </section>
+
+  <section id="instalacao">
+    <h2>Instalação e uso</h2>
+    <p>
+      Recomendamos instalação por profissional qualificado. Equipamentos fitness devem ser usados conforme o manual e, de
+      preferência, com orientação de um profissional de educação física. Respeite a carga máxima de suportes e aparelhos.
+    </p>
+  </section>
+
+  <section id="propriedade">
+    <h2>Propriedade intelectual</h2>
+    <p>
+      A marca BERVEX, o logotipo, os textos e o layout do site são protegidos por lei. Marcas de fabricantes, como Durafloor e
+      EspaçoFloor, pertencem aos seus titulares. Não é permitido copiar o conteúdo sem autorização.
+    </p>
+  </section>
+
+  <section id="responsabilidade">
+    <h2>Responsabilidades</h2>
+    <p>
+      Trabalhamos para manter as informações corretas e o site no ar, mas podem ocorrer erros de digitação ou indisponibilidade
+      temporária; nesses casos, vale o que for confirmado no orçamento. Links para sites de terceiros são de responsabilidade
+      deles.
+    </p>
+  </section>
+
+  <section id="alteracoes">
+    <h2>Alterações e foro</h2>
+    <p>
+      Estes termos podem ser atualizados; a versão em vigor é a publicada nesta página na data da compra. Fica eleito o foro do
+      domicílio do consumidor para resolver qualquer questão.
+    </p>
+    <p>Dúvidas: <a class="link" href="/contato/">fale com a gente</a>.</p>
+  </section>
+</LegalLayout>

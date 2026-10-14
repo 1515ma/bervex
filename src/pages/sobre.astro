@@ -1,0 +1,101 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Icon from '../components/Icon.astro';
+import { catalogImage } from '../lib/catalog-images';
+
+const breadcrumbs = [
+  { name: 'Início', path: '/' },
+  { name: 'Sobre', path: '/sobre/' },
+];
+
+const values = [
+  { icon: 'shield', title: 'Alta resistência', text: 'Borracha densa, vinílico com capa de uso e pesos de ferro fundido, escolhidos para anos de uso pesado.' },
+  { icon: 'dumbbell', title: 'Desempenho profissional', text: 'A indicação sai do uso real: tipo de treino, tráfego do ambiente e espaço disponível.' },
+  { icon: 'leaf', title: 'Sustentável', text: 'As placas de borracha reaproveitam pneus que iriam para o descarte.' },
+  { icon: 'gear', title: 'Qualidade industrial', text: 'Medidas, espessuras e acabamentos conferidos antes de cada pedido.' },
+] as const;
+---
+
+<BaseLayout
+  title="Sobre a BERVEX: pisos, revestimentos e fitness"
+  description="A BERVEX vende pisos vinílicos, pisos de borracha, grama sintética, tatame e equipamentos fitness com atendimento pelo WhatsApp."
+  pageType="AboutPage"
+  breadcrumbs={breadcrumbs}
+>
+  <div class="container"><Breadcrumbs items={breadcrumbs} /></div>
+
+  <section class="container about">
+    <div class="about__copy">
+      <h1>Força de urso, precisão de indústria</h1>
+      <p>
+        O urso da BERVEX é feito de facetas, como uma peça usinada. É assim que escolhemos o que vendemos: produtos fortes,
+        com medida certa e acabamento caprichado.
+      </p>
+      <p>
+        Reunimos num só lugar o chão e o treino: piso vinílico para casa e comércio, piso de borracha, grama e tatame para
+        academias e áreas de lazer, e anilhas, halteres, dumbbells, kettlebells, barras, puxadores e suportes para montar a
+        área de treino completa.
+      </p>
+      <a class="btn" href="/loja/">Conhecer a loja</a>
+    </div>
+    <div class="about__logo">
+      <picture>
+        <source srcset="/brand/bervex-logo.webp" type="image/webp" />
+        <img src="/brand/bervex-logo.png" alt="Logo BERVEX: urso geométrico em dourado e prata sobre o nome BERVEX" width="675" height="474" loading="eager" decoding="async" />
+      </picture>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="container">
+      <h2 class="kicker-line">O que nos guia</h2>
+      <ul class="pillars">
+        {
+          values.map((v) => (
+            <li class="pillar">
+              <Icon name={v.icon} size={28} />
+              <h3>{v.title}</h3>
+              <p>{v.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container gallery">
+      <figure>
+        <Image src={catalogImage('photos/obra-academia-borracha-ampla')} alt="Academia com piso de borracha e bancos de musculação" widths={[400, 600]} sizes="(min-width: 48em) 33vw, 100vw" format="webp" quality={78} loading="lazy" />
+      </figure>
+      <figure>
+        <Image src={catalogImage('photos/obra-academia-corredor')} alt="Academia com piso vinílico amadeirado e esteiras" widths={[400, 600]} sizes="(min-width: 48em) 33vw, 100vw" format="webp" quality={78} loading="lazy" />
+      </figure>
+      <figure>
+        <Image src={catalogImage('photos/obra-academia-piso-madeira')} alt="Transição entre piso vinílico e piso de borracha em academia" widths={[400, 600]} sizes="(min-width: 48em) 33vw, 100vw" format="webp" quality={78} loading="lazy" />
+      </figure>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about { display: grid; gap: 2rem; align-items: center; padding-bottom: clamp(3rem, 6vw, 5rem); }
+  .about h1 { font-size: clamp(2rem, 1.4rem + 2.6vw, 3.25rem); margin-bottom: 1.25rem; }
+  .about__copy p { color: #333; max-width: 52ch; }
+  .about__copy p + p { margin-top: 0.9rem; }
+  .about__copy .btn { margin-top: 1.75rem; }
+  .about__logo { border-radius: 20px; background: var(--black); padding: clamp(1.5rem, 4vw, 3rem); }
+  .about__logo img { width: 100%; height: auto; }
+  .pillars { display: grid; gap: 1rem; margin-top: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
+  .pillar { background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 1.5rem; }
+  .pillar :global(svg) { color: var(--gold); }
+  .pillar h3 { margin-top: 1rem; font-size: 1.0625rem; }
+  .pillar p { margin-top: 0.4rem; color: var(--muted); font-size: 0.9375rem; }
+  .gallery { display: grid; gap: 1rem; }
+  .gallery figure { border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 3 / 4; }
+  .gallery :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  @media (min-width: 48em) { .gallery { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 60em) { .about { grid-template-columns: 1.1fr 0.9fr; gap: 4rem; } }
+</style>

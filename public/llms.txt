@@ -1,0 +1,27 @@
+# BERVEX
+
+> Loja online de pisos e equipamentos fitness. Vende piso vinílico (linhas Durafloor e EspaçoFloor, colado e SPC, 15 linhas e 95 cores, por m²), piso de borracha para academia (placas 1 × 1 m de 15 a 50 mm e 50 × 50 cm de 11 a 20 mm, em 7 cores), rampa de acabamento, piso moeda, grama sintética, tatame EVA, anilhas (1 a 25 kg, furação 31 ou 51 mm), halteres (1 a 10 kg), dumbbells (2 a 100 kg), kettlebells (4 a 32 kg), barras, puxadores, suportes e acessórios. O cliente monta o carrinho no site e envia o pedido pelo WhatsApp, recebendo valor, frete e prazo.
+
+## Categorias
+
+- [Pisos vinílicos](https://www.bervex.com.br/loja/pisos-vinilicos/): 15 linhas Durafloor e EspaçoFloor em madeira, pedra e cimento.
+- [Pisos de borracha](https://www.bervex.com.br/loja/pisos-de-borracha/): placas 1 × 1 m e 50 × 50 cm, rampa de acabamento e piso moeda.
+- [Grama sintética e tatame](https://www.bervex.com.br/loja/grama-e-tatame/): grama verde e colorida e tatame EVA em 10 cores.
+- [Anilhas](https://www.bervex.com.br/loja/anilhas/)
+- [Halteres](https://www.bervex.com.br/loja/halteres/)
+- [Dumbbells](https://www.bervex.com.br/loja/dumbbells/)
+- [Kettlebells](https://www.bervex.com.br/loja/kettlebells/)
+- [Barras](https://www.bervex.com.br/loja/barras/)
+- [Puxadores](https://www.bervex.com.br/loja/puxadores/)
+- [Suportes](https://www.bervex.com.br/loja/suportes/)
+- [Acessórios e aparelhos](https://www.bervex.com.br/loja/acessorios/)
+
+## Guias
+
+- [Como instalar piso vinílico](https://www.bervex.com.br/como-instalar-piso-vinilico/): colado x SPC, preparo do contrapiso (desnível até 3 mm em 2 m, umidade até 2,5%), aclimatação de 24 h, folgas de dilatação (5 a 10 mm no SPC, 3 a 5 mm no colado), limpeza e garantia.
+
+## Regras rápidas
+
+- Piso de borracha: 15 mm para cardio e funcional, 20 mm para musculação, 30 a 50 mm para LPO e cross training.
+- Comprar 5% a mais de placas de borracha e 10% a mais de piso vinílico.
+- Anilhas com furação 31 mm servem em barras comuns; 51 mm em barras olímpicas.

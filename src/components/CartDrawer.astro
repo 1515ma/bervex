@@ -1,0 +1,66 @@
+---
+import CartPanel from './CartPanel.astro';
+import Icon from './Icon.astro';
+import { BERVEX_SITE, CART_PAGE_PATH } from '../config/site';
+---
+
+<dialog class="cart-drawer" aria-labelledby="carrinho-titulo" data-cart-drawer data-whatsapp={BERVEX_SITE.whatsappNumber}>
+  <div class="cart-drawer__panel">
+    <div class="cart-drawer__head">
+      <p class="cart-drawer__title" id="carrinho-titulo">Carrinho</p>
+      <button class="cart-drawer__close" type="button" data-cart-close aria-label="Fechar carrinho">
+        <Icon name="close" size={22} />
+      </button>
+    </div>
+    <div class="cart-drawer__body">
+      <CartPanel variant="drawer" />
+    </div>
+    <div class="cart-drawer__foot">
+      <a class="link-arrow" href={CART_PAGE_PATH}>Ver carrinho completo</a>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  import { getBrowserCartStore } from '../scripts/cart-store';
+  import { wireCartCount, wireCartRoot } from '../scripts/cart-ui';
+  import { wireCartDrawer } from '../scripts/cart-drawer';
+
+  const store = getBrowserCartStore();
+  wireCartCount(document, store);
+  const drawer = document.querySelector<HTMLDialogElement>('[data-cart-drawer]');
+  if (drawer) {
+    const deps = { whatsappNumber: drawer.dataset.whatsapp ?? '', openUrl: (url: string) => window.open(url, '_blank', 'noopener') };
+    const root = drawer.querySelector<HTMLElement>('[data-cart-root]');
+    if (root) wireCartRoot(root, store, deps);
+    wireCartDrawer(document, drawer);
+  }
+</script>
+
+<style>
+  .cart-drawer {
+    margin: 0 0 0 auto; padding: 0; border: 0; width: min(28rem, 100vw); max-width: 100vw; height: 100dvh; max-height: 100dvh;
+    background: transparent; overflow: visible;
+  }
+  .cart-drawer::backdrop { background: rgb(15 15 15 / 0.45); }
+  .cart-drawer__panel {
+    display: grid; grid-template-rows: auto 1fr auto; height: 100%; background: #fff;
+    box-shadow: -18px 0 40px rgb(0 0 0 / 0.18); /* taste-skill-ignore: gaveta é sobreposição real */
+  }
+  .cart-drawer__head { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; border-bottom: 1px solid var(--line); }
+  .cart-drawer__title { font-weight: 750; font-size: 1.25rem; font-stretch: 104%; }
+  .cart-drawer__close { padding: 0.4rem; border-radius: 8px; transition: background-color var(--t-hover) ease; }
+  @media (hover: hover) and (pointer: fine) { .cart-drawer__close:hover { background: var(--surface); } }
+  .cart-drawer__body { overflow-y: auto; padding: 0.5rem 1.25rem 1.5rem; overscroll-behavior: contain; }
+  .cart-drawer__foot { padding: 1rem 1.25rem; border-top: 1px solid var(--line); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .cart-drawer[open] .cart-drawer__panel { transition: transform 320ms var(--ease-out); }
+    .cart-drawer[open]::backdrop { transition: opacity 320ms ease; }
+    @starting-style {
+      .cart-drawer[open] .cart-drawer__panel { transform: translateX(100%); }
+      .cart-drawer[open]::backdrop { opacity: 0; }
+    }
+    .cart-drawer.is-closing .cart-drawer__panel { transform: translateX(100%); transition: transform 200ms var(--ease-out); }
+  }
+</style>

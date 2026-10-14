@@ -1,0 +1,457 @@
+{
+ "durafloor-nativa": {
+  "title": "Durafloor Nativa",
+  "colors": [
+   {
+    "name": "Belém",
+    "slug": "belem"
+   },
+   {
+    "name": "Ilhéus",
+    "slug": "ilheus"
+   },
+   {
+    "name": "Manaus",
+    "slug": "manaus"
+   },
+   {
+    "name": "Noronha",
+    "slug": "noronha"
+   },
+   {
+    "name": "Montenegro",
+    "slug": "montenegro"
+   },
+   {
+    "name": "Natal",
+    "slug": "natal"
+   },
+   {
+    "name": "Santarém",
+    "slug": "satarem"
+   },
+   {
+    "name": "Vila Velha",
+    "slug": "vila-velha"
+   }
+  ]
+ },
+ "spot-pisos-home": {
+  "title": "Spot Pisos Home",
+  "colors": [
+   {
+    "name": "Dublin",
+    "slug": "dublin"
+   },
+   {
+    "name": "Astor",
+    "slug": "astor"
+   },
+   {
+    "name": "Bristol",
+    "slug": "bristol"
+   },
+   {
+    "name": "Manchester",
+    "slug": "manchester"
+   },
+   {
+    "name": "Oxford",
+    "slug": "oxford"
+   },
+   {
+    "name": "Navona",
+    "slug": "navona"
+   },
+   {
+    "name": "Dover",
+    "slug": "dover"
+   },
+   {
+    "name": "York",
+    "slug": "york"
+   }
+  ]
+ },
+ "espacofloor-office-plus": {
+  "title": "EspaçoFloor Office Plus",
+  "colors": [
+   {
+    "name": "Cement Platinum",
+    "slug": "cement-platinum"
+   },
+   {
+    "name": "Carpet Gray",
+    "slug": "carpet-gray"
+   },
+   {
+    "name": "Cement Titanium",
+    "slug": "cement-titanium"
+   },
+   {
+    "name": "Quartzo Gray",
+    "slug": "quartzo-gray"
+   },
+   {
+    "name": "Amaro Oak",
+    "slug": "amaro-oak"
+   },
+   {
+    "name": "Nature Oak",
+    "slug": "nature-oak"
+   },
+   {
+    "name": "Quartzo Prime",
+    "slug": "quartzo-prime"
+   }
+  ]
+ },
+ "durafloor-art": {
+  "title": "Durafloor Art",
+  "colors": [
+   {
+    "name": "Mônaco",
+    "slug": "monaco"
+   },
+   {
+    "name": "Atenas",
+    "slug": "atenas"
+   },
+   {
+    "name": "Salamanca",
+    "slug": "salamanca"
+   },
+   {
+    "name": "Kamari",
+    "slug": "kamari"
+   },
+   {
+    "name": "Nápoles",
+    "slug": "napoles"
+   }
+  ]
+ },
+ "espacofloor-office-plus-plus": {
+  "title": "EspaçoFloor Office Plus+",
+  "colors": [
+   {
+    "name": "Blanche",
+    "slug": "blanche"
+   },
+   {
+    "name": "Naturalle",
+    "slug": "naturalle"
+   },
+   {
+    "name": "Grafitto",
+    "slug": "grafitto"
+   },
+   {
+    "name": "Carbono",
+    "slug": "carbono"
+   }
+  ]
+ },
+ "espacofloor-office-square": {
+  "title": "EspaçoFloor Office Square",
+  "colors": [
+   {
+    "name": "Medium Gray",
+    "slug": "medium-gray"
+   },
+   {
+    "name": "Dark Gray",
+    "slug": "dark-gray"
+   },
+   {
+    "name": "Light Gray",
+    "slug": "light-gray"
+   },
+   {
+    "name": "Marble Luna",
+    "slug": "marble-luna"
+   }
+  ]
+ },
+ "espacofloor-royal-wood": {
+  "title": "EspaçoFloor Royal Wood",
+  "colors": [
+   {
+    "name": "Oak California",
+    "slug": "oak-california"
+   },
+   {
+    "name": "Oak Arizona",
+    "slug": "oak-arizona"
+   },
+   {
+    "name": "Oak Dakota",
+    "slug": "oak-dakota"
+   },
+   {
+    "name": "Oak Michigan",
+    "slug": "oak-michigan"
+   }
+  ]
+ },
+ "espacofloor-royal-mild": {
+  "title": "EspaçoFloor Royal Mild",
+  "colors": [
+   {
+    "name": "Ash Nevada",
+    "slug": "ash-nevada"
+   },
+   {
+    "name": "Nut Colorado",
+    "slug": "nut-colorado"
+   },
+   {
+    "name": "Acacia Montana",
+    "slug": "acacia-montana"
+   },
+   {
+    "name": "Nut Vermont",
+    "slug": "nut-vermont"
+   }
+  ]
+ },
+ "espacofloor-office-wood": {
+  "title": "EspaçoFloor Office Wood",
+  "colors": [
+   {
+    "name": "Oak Milano",
+    "slug": "oak-milano"
+   },
+   {
+    "name": "Nut Bruxelas",
+    "slug": "nut-bruxelas"
+   }
+  ]
+ },
+ "espacofloor-soft": {
+  "title": "EspaçoFloor Soft",
+  "colors": [
+   {
+    "name": "Carvalho Old",
+    "slug": "carvalho-old"
+   },
+   {
+    "name": "Amendola Rústica",
+    "slug": "amendola-rustica"
+   },
+   {
+    "name": "Carvalho Oliva",
+    "slug": "carvalho-oliva"
+   },
+   {
+    "name": "Nogueira Escura",
+    "slug": "nogueira-escura"
+   },
+   {
+    "name": "Fresno Blanco",
+    "slug": "fresno-blanco"
+   },
+   {
+    "name": "Fresno Natural",
+    "slug": "fresno-natural"
+   }
+  ]
+ },
+ "durafloor-city": {
+  "title": "Durafloor City",
+  "colors": [
+   {
+    "name": "Chicago",
+    "slug": "chicago"
+   },
+   {
+    "name": "Petra",
+    "slug": "petra"
+   },
+   {
+    "name": "Bari",
+    "slug": "bari"
+   },
+   {
+    "name": "Sevilha",
+    "slug": "sevilha"
+   },
+   {
+    "name": "Oslo",
+    "slug": "oslo"
+   },
+   {
+    "name": "Barbados",
+    "slug": "barbados"
+   }
+  ]
+ },
+ "espacofloor-office-mild": {
+  "title": "EspaçoFloor Office Mild",
+  "colors": [
+   {
+    "name": "Maple Lion",
+    "slug": "maple-lion"
+   },
+   {
+    "name": "Castanho Viena",
+    "slug": "castanho-viena"
+   },
+   {
+    "name": "Carvalho Turim",
+    "slug": "carvalho-turim"
+   },
+   {
+    "name": "Oak Baden",
+    "slug": "oak-baden"
+   },
+   {
+    "name": "Amsterdan",
+    "slug": "amsterdan"
+   },
+   {
+    "name": "London",
+    "slug": "london"
+   }
+  ]
+ },
+ "durafloor-inova": {
+  "title": "Durafloor Inova",
+  "colors": [
+   {
+    "name": "Nepal",
+    "slug": "nepal"
+   },
+   {
+    "name": "Londres",
+    "slug": "londres"
+   },
+   {
+    "name": "Tarragona",
+    "slug": "tarragona"
+   },
+   {
+    "name": "Belmonte",
+    "slug": "belmonte"
+   },
+   {
+    "name": "Paris",
+    "slug": "paris"
+   },
+   {
+    "name": "Vesuvio",
+    "slug": "vesuvio"
+   },
+   {
+    "name": "Maipo",
+    "slug": "maipo"
+   },
+   {
+    "name": "Atlanta",
+    "slug": "atlanta"
+   },
+   {
+    "name": "Recife",
+    "slug": "recife"
+   }
+  ]
+ },
+ "flooring-imperial": {
+  "title": "Flooring Imperial",
+  "colors": [
+   {
+    "name": "Emerald",
+    "slug": "emerald"
+   },
+   {
+    "name": "Mocha",
+    "slug": "mocha"
+   },
+   {
+    "name": "Blue",
+    "slug": "blue"
+   },
+   {
+    "name": "Geraniun",
+    "slug": "geraniun"
+   },
+   {
+    "name": "Cablack",
+    "slug": "cablack"
+   },
+   {
+    "name": "Safgold",
+    "slug": "safgold"
+   },
+   {
+    "name": "Clwhite",
+    "slug": "clwhite"
+   },
+   {
+    "name": "Steling",
+    "slug": "steling"
+   },
+   {
+    "name": "BlueGray",
+    "slug": "bluegray"
+   },
+   {
+    "name": "Pewter",
+    "slug": "pewter"
+   },
+   {
+    "name": "SandWhite",
+    "slug": "sandwhite"
+   },
+   {
+    "name": "Fortress White",
+    "slug": "fortress-white"
+   }
+  ]
+ },
+ "durafloor-urban": {
+  "title": "Durafloor Urban",
+  "colors": [
+   {
+    "name": "Cartagenia",
+    "slug": "cartagenia"
+   },
+   {
+    "name": "Cingapura",
+    "slug": "cingapura"
+   },
+   {
+    "name": "Shanghai",
+    "slug": "shanghai"
+   },
+   {
+    "name": "Sinai",
+    "slug": "sinai"
+   },
+   {
+    "name": "Taos",
+    "slug": "taos"
+   },
+   {
+    "name": "Parma",
+    "slug": "parma"
+   },
+   {
+    "name": "Osaka",
+    "slug": "osaka"
+   },
+   {
+    "name": "Santiago",
+    "slug": "santiago"
+   },
+   {
+    "name": "Valência",
+    "slug": "valencia"
+   },
+   {
+    "name": "Tulum",
+    "slug": "tulum"
+   }
+  ]
+ }
+}
